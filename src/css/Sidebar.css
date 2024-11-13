@@ -1,0 +1,133 @@
+/* CSS global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden; /* Évite le défilement horizontal */
+}
+
+/* Structure principale du dashboard */
+.dashboard {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+.toggle-icon {
+    font-size: 1.5em;
+    color: #fff;
+    cursor: pointer;
+    margin: 10px 0;
+    transition: transform 0.3s;
+}
+
+/* Styles de base pour la sidebar */
+.sidebar {
+    width: 60px; /* Sidebar repliée */
+    background-color: #82354b;
+    color: #fff;
+    transition: width 0.3s;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+.sidebar.open {
+    width: 200px; /* Sidebar dépliée */
+}
+
+/* Style pour les liens de navigation */
+.sidebar nav a {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 15px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1em;
+    text-align: left;
+    width: 100%;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar nav a:hover {
+    background-color: #b93636;
+}
+
+.sidebar nav a.active {
+    background-color: #b93636;
+}
+
+/* Styles spécifiques pour afficher les icônes et le texte */
+.sidebar nav a svg {
+    margin-right: 10px;
+    font-size: 1.2em;
+}
+
+/* Masquer le texte quand la sidebar est repliée */
+.sidebar nav a span {
+    display: none;
+}
+
+.sidebar.open nav a span {
+    display: inline;
+}
+
+.sidebar nav a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1em;
+    text-align: center;
+    width: 100%;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Contenu principal */
+.main-content {
+    flex: 1; /* Prend l'espace restant */
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.logout {
+    margin-top: auto; /* Pushes logout to the bottom */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.logout:hover {
+    background-color: #b93636;
+}
+
+.logout svg {
+    font-size: 1.2em;
+    margin-right: 10px;
+}
+
+.logout span {
+    display: none;
+}
+
+.sidebar.open .logout span {
+    display: inline;
+}

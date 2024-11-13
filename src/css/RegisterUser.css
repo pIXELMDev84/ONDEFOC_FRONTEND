@@ -1,0 +1,105 @@
+/* General layout for dashboard */
+.dashboard {
+    display: flex;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+}
+
+/* Main content area */
+.main-content {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fafafa;
+}
+
+/* Title */
+h1 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Registration form container */
+.register-form {
+    background-color: #333; /* Same color as sidebar */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    color: #fff;
+}
+
+.register-form input,
+.register-form select,
+.register-form button {
+    width: 100%;
+    padding: 12px;
+    margin: 12px 0;
+    border-radius: 5px;
+    border: none;
+    font-size: 1em;
+}
+
+/* Input fields */
+.register-form input,
+.register-form select {
+    background-color: #444;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.register-form input::placeholder,
+.register-form select {
+    color: #ccc;
+}
+
+.register-form input:focus,
+.register-form select:focus {
+    outline: none;
+    background-color: #555;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Submit button */
+.register-form button {
+    background-color: #4CAF50; /* Green color for submit button */
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.register-form button:hover {
+    background-color: #45a049;
+}
+
+/* Error message */
+.error-message {
+    color: #ff6666;
+    font-size: 0.9em;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Hover effects for input fields */
+.register-form input:hover,
+.register-form select:hover {
+    background-color: #555;
+    color: #fff;
+}
+
+/* Adjustments for mobile responsiveness */
+@media (max-width: 600px) {
+    .main-content {
+        padding: 20px;
+    }
+    .register-form {
+        padding: 20px;
+        width: 90%;
+    }
+}
