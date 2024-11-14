@@ -5,6 +5,7 @@ import DashboardUser from './components/DashbordUser';
 import Settings from './components/Settings';
 import UserSettings from './components/UserSettings';
 import RegisterUser from './components/RegisterUser';
+import UserList from './components/UserList';
 
 function App() {
     return (
@@ -18,7 +19,7 @@ function App() {
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/usersettings" element={<UserSettings />} />
                 <Route path="/settings/add" element={<RegisterUser />} />
-
+                <Route path="/users" element={<UserList/>} />
             </Routes>
         </Router>
     );
