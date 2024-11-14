@@ -25,7 +25,7 @@ h1 {
 
 /* Registration form container */
 .register-form {
-    background-color: #82354B; /* Same color as sidebar */
+    background-color: #82354B;
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
