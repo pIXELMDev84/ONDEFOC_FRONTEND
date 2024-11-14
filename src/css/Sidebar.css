@@ -131,3 +131,16 @@ html, body {
 .sidebar.open .logout span {
     display: inline;
 }
+.sidebar-logo {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sidebar-logo img {
+    width: 260px;
+    max-width: 80%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
