@@ -11,6 +11,7 @@ function RegisterUser() {
     const [role, setRole] = useState("user");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [success, setSuccess] = useState(""); // Nouvel état pour le message de succès
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -35,20 +36,26 @@ function RegisterUser() {
             const data = await response.json();
 
             if (response.ok) {
-                navigate("/dashboard");
+                setSuccess("Utilisateur enregistré avec succès !");
+                setError("");
+                setTimeout(() => {
+                    navigate("/dashboard");
+                }, 2000); // Redirige après 2 secondes
             } else {
                 setError(data.message || "Une erreur est survenue lors de l'enregistrement.");
+                setSuccess("");
             }
         } catch (error) {
             setError("Une erreur s'est produite. Veuillez réessayer.");
+            setSuccess("");
             console.error("Erreur:", error);
         }
     };
 
     return (
-        <div className="dashboard"> {/* Dashboard container with sidebar and main content */}
-            <Sidebar /> {/* Sidebar component */}
-            <div className="main-content"> {/* Main content area */}
+        <div className="dashboard">
+            <Sidebar />
+            <div className="main-content">
                 <h1>Enregistrer un Nouvel Utilisateur</h1>
                 <form onSubmit={handleSubmit} className="register-form">
                     <input
@@ -80,7 +87,7 @@ function RegisterUser() {
                         required
                     />
                     <select value={role} onChange={(e) => setRole(e.target.value)} required>
-                        <option value="user">Utilisateur</option>
+                        <option value="user">Cuisinier</option>
                         <option value="admin">Administrateur</option>
                         <option value="chefservice">Chef Service</option>
                         <option value="magasinier">Magasinier</option>
@@ -94,6 +101,7 @@ function RegisterUser() {
                     />
                     <button type="submit">Enregistrer</button>
                     {error && <p className="error-message">{error}</p>}
+                    {success && <p className="success-message">{success}</p>}
                 </form>
             </div>
         </div>

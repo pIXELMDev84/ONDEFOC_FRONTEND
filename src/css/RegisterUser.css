@@ -103,3 +103,21 @@ h1 {
         width: 90%;
     }
 }
+.error-message,
+.success-message {
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.error-message {
+    color: #D8000C;
+    background-color: #FFD2D2;
+}
+
+.success-message {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+}
