@@ -82,6 +82,8 @@ function RegisterUser() {
                     <select value={role} onChange={(e) => setRole(e.target.value)} required>
                         <option value="user">Utilisateur</option>
                         <option value="admin">Administrateur</option>
+                        <option value="chefservice">Chef Service</option>
+                        <option value="magasinier">Magasinier</option>
                     </select>
                     <input
                         type="password"
