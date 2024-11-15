@@ -31,15 +31,26 @@ function UserList() {
             <Sidebar />
             <div className="main-content">
                 <h1>Liste des Utilisateurs</h1>
-                <ul className="user-list">
-                    {filteredUsers.map(user => (
-                        <li key={user.id} className="user-item">
-                            <span className="user-name">{user.nom} {user.prenom}</span>
-                            <span className="user-email">{user.email}</span>
-                            <span className="user-role">{user.role}</span>
-                        </li>
-                    ))}
-                </ul>
+                <table className="user-table">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Email</th>
+                            <th>Rôle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {filteredUsers.map(user => (
+                            <tr key={user.id}>
+                                <td className="user-name">{user.nom}</td>
+                                <td>{user.prenom}</td>
+                                <td className="user-email">{user.email}</td>
+                                <td className="user-role">{user.role}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
         </div>
     );

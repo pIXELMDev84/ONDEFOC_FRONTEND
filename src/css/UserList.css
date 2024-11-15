@@ -13,31 +13,43 @@ h1 {
     margin-bottom: 20px;
 }
 
-.user-list {
-    list-style-type: none;
-    padding: 0;
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border-radius: 8px;
 }
 
-.user-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #f5f5f5;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+.user-table th, .user-table td {
+    padding: 15px;
+    text-align: left;
 }
 
-.user-name {
+.user-table th {
+    background-color: #4CAF50;
+    color: white;
     font-weight: bold;
 }
 
-.user-email {
-    color: #666;
+.user-table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+.user-table tbody tr:nth-child(even) {
+    background-color: #fff;
+}
+
+.user-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.user-name, .user-email, .user-role {
+    font-size: 16px;
+    color: #333;
 }
 
 .user-role {
-    color: #333;
     font-style: italic;
+    color: #777;
 }
