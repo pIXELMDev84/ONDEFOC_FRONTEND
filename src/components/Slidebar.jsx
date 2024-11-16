@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FiMenu, FiHome, FiSettings, FiUser, FiUsers, FiLogOut } from "react-icons/fi"; // Import FiLogOut icon
 import "../css/Sidebar.css";
-import logo from "../images/LOGO-ONDEFOC_BLAN.png"
+import logo from "../images/LOGO-ONDEFOC_BLAN.png";
 
 function Sidebar() {
     const location = useLocation();
@@ -41,11 +41,13 @@ function Sidebar() {
             )}
 
             <nav>
+                {/* Dashboard Link */}
                 <Link to="/dashboard" className={location.pathname === "/dashboard" ? "active" : ""}>
                     <FiHome />
                     {isOpen && <span> Dashboard</span>}
                 </Link>
 
+                {/* Settings Link */}
                 {userRole === "admin" ? (
                     <Link to="/settings" className={location.pathname === "/settings" ? "active" : ""}>
                         <FiSettings />
@@ -58,14 +60,19 @@ function Sidebar() {
                     </Link>
                 )}
 
-                <Link to="/users" className={location.pathname === "/users" ? "active" : ""}>
-                    <FiUser />
-                    {isOpen && <span> Utilisateurs</span>}
-                </Link>
-                <Link to="/clients" className={location.pathname === "/clients" ? "active" : ""}>
-                    <FiUsers />
-                    {isOpen && <span> Clients</span>}
-                </Link>
+                {/* Only show "Utilisateurs" and "Clients" links for admin */}
+                {userRole === "admin" && (
+                    <>
+                        <Link to="/users" className={location.pathname === "/users" ? "active" : ""}>
+                            <FiUser />
+                            {isOpen && <span> Utilisateurs</span>}
+                        </Link>
+                        <Link to="/clients" className={location.pathname === "/clients" ? "active" : ""}>
+                            <FiUsers />
+                            {isOpen && <span> Clients</span>}
+                        </Link>
+                    </>
+                )}
             </nav>
 
             {/* Logout link positioned at the bottom */}
