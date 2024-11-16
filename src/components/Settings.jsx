@@ -18,19 +18,12 @@ function Settings() {
                 <div className="settings-container">
                     <h1>Paramètres Utilisateur</h1>
                     <div className="cards-vertical">
-                        <div className="card" onClick={() => navigateTo("/settings/delete")}>
-                            <h2>Supprimer un Utilisateur</h2>
-                            <p>Retirez les comptes utilisateurs de manière définitive.</p>
-                        </div>
-                        <div className="card" onClick={() => navigateTo("/settings/edit")}>
-                            <h2>Modifier un Utilisateur</h2>
-                            <p>Mettez à jour les informations des utilisateurs existants.</p>
-                        </div>
-                        <div className="card" onClick={() => navigateTo("/settings/add")}>
+
+                        <div className="card" onClick={() => navigateTo("/settings/addUser")}>
                             <h2>Enregistrer un Utilisateur</h2>
                             <p>Ajoutez un nouveau compte utilisateur dans le système.</p>
                         </div>
-                        <div className="card" onClick={() => navigateTo("/settings/add")}>
+                        <div className="card" onClick={() => navigateTo("/settings/addFourni")}>
                             <h2>Enregistrer un Fournisseur</h2>
                             <p>Ajoutez un nouveau compte Fournisseur dans le système.</p>
                         </div>

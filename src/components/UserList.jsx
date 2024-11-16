@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Sidebar from "./Slidebar.jsx";
+import { FiEdit } from "react-icons/fi"; // Import de l'icône
 import "../css/UserList.css";
 
 function UserList() {
@@ -24,7 +25,11 @@ function UserList() {
         fetchUsers();
     }, []);
 
-    const filteredUsers = users.filter(user => user.id !== currentUserId);
+    const filteredUsers = users.filter((user) => user.id !== currentUserId);
+
+    const handleEdit = (user) => {
+        console.log("Modifier l'utilisateur:", user);
+    };
 
     return (
         <div className="dashboard">
@@ -38,15 +43,25 @@ function UserList() {
                             <th>Prénom</th>
                             <th>Email</th>
                             <th>Rôle</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredUsers.map(user => (
+                        {filteredUsers.map((user) => (
                             <tr key={user.id}>
                                 <td className="user-name">{user.nom}</td>
                                 <td>{user.prenom}</td>
                                 <td className="user-email">{user.email}</td>
                                 <td className="user-role">{user.role}</td>
+                                <td className="user-actions">
+                                    <button
+                                        className="edit-button"
+                                        onClick={() => handleEdit(user)}
+                                        title="Modifier"
+                                    >
+                                        <FiEdit />
+                                    </button>
+                                </td>
                             </tr>
                         ))}
                     </tbody>

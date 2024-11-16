@@ -19,7 +19,7 @@
 /* Title */
 h1 {
     font-size: 2em;
-    color: #333;
+    color: #ffffff;
     margin-bottom: 20px;
 }
 
@@ -31,7 +31,7 @@ h1 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 500px;
-    color: #fff;
+    color: #000000;
 }
 
 .register-form input,
@@ -48,20 +48,20 @@ h1 {
 /* Input fields */
 .register-form input,
 .register-form select {
-    background-color: #444;
-    color: #fff;
+    background-color: #ffffff;
+    color: #000000;
     transition: all 0.3s ease;
 }
 
 .register-form input::placeholder,
 .register-form select {
-    color: #ccc;
+    color: #beadad;
 }
 
 .register-form input:focus,
 .register-form select:focus {
     outline: none;
-    background-color: #555;
+    background-color: #ffffff;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
@@ -89,8 +89,8 @@ h1 {
 /* Hover effects for input fields */
 .register-form input:hover,
 .register-form select:hover {
-    background-color: #555;
-    color: #fff;
+    background-color: #ffffff;
+    color: #000000;
 }
 
 /* Adjustments for mobile responsiveness */
