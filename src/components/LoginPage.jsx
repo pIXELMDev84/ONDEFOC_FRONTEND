@@ -32,7 +32,7 @@ function LoginPage() {
             console.log("Réponse:", data);
 
             if (response.ok) {
-                // Stocker les informations de l'utilisateur
+
                 localStorage.setItem("user", JSON.stringify(data.user));
 
                 // Rediriger en fonction du rôle de l'utilisateur
@@ -40,9 +40,10 @@ function LoginPage() {
                     navigate("/dashboard");
                 } else if (data.user && data.user.role === "user") {
                     navigate("/dashboardUser");   
- 
+                } else if (data.user && data.user.role === "magasinier") {
+                    navigate("/dashboardMagasinier"); 
                 } else {
-                    setError("Rôle non reconnu."); // En cas de rôle inconnu
+                    setError("Rôle non reconnu.");
                 }
             } else {
                 setError(data.message || "Nom d'utilisateur ou mot de passe incorrect");
