@@ -7,6 +7,8 @@ import UserSettings from './components/UserSettings';
 import RegisterUser from './components/RegisterUser';
 import UserList from './components/UserList';
 import RegisterFournisseur from './components/RegisterFournisseur';
+import DashbordMagasinier from './components/DashbordMagasinier';
+
 
 
 function App() {
@@ -18,6 +20,7 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/dashboard" element={<DashboardAdmin />} />
                 <Route path="/dashboardUser" element={<DashboardUser />} />
+                <Route path="/dashboardMagasinier" element={<DashbordMagasinier/>} />
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/usersettings" element={<UserSettings />} />
                 <Route path="/settings/addUser" element={<RegisterUser />} />

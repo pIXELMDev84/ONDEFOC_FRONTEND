@@ -39,7 +39,8 @@ function LoginPage() {
                 if (data.user && data.user.role === "admin") {
                     navigate("/dashboard");
                 } else if (data.user && data.user.role === "user") {
-                    navigate("/dashboardUser");
+                    navigate("/dashboardUser");   
+ 
                 } else {
                     setError("Rôle non reconnu."); // En cas de rôle inconnu
                 }
