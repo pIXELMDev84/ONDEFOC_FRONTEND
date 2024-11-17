@@ -1,7 +1,7 @@
 // src/components/Sidebar.js
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FiMenu, FiHome, FiSettings, FiUser, FiUsers, FiLogOut } from "react-icons/fi"; // Import FiLogOut icon
+import { FiMenu, FiHome, FiSettings, FiUser, FiUsers, FiLogOut,FiFileText } from "react-icons/fi"; // Import FiLogOut icon
 import "../css/Sidebar.css";
 import logo from "../images/LOGO-ONDEFOC_BLAN.png";
 
@@ -60,7 +60,6 @@ function Sidebar() {
                     </Link>
                 )}
 
-                {/* Only show "Utilisateurs" and "Clients" links for admin */}
                 {userRole === "admin" && (
                     <>
                         <Link to="/users" className={location.pathname === "/users" ? "active" : ""}>
@@ -70,6 +69,18 @@ function Sidebar() {
                         <Link to="/clients" className={location.pathname === "/clients" ? "active" : ""}>
                             <FiUsers />
                             {isOpen && <span> Clients</span>}
+                        </Link>
+                    </>
+                )}
+                {userRole === "magasinier" && (
+                    <>
+                        <Link to="/cbdc" className={location.pathname === "/cbdc" ? "active" : ""}>
+                            <FiFileText  />
+                            {isOpen && <span>Bon de commande</span>}
+                        </Link>
+                        <Link to="/clients" className={location.pathname === "/clients" ? "active" : ""}>
+                            <FiUsers />
+                            {isOpen && <span>Fournisseur</span>}
                         </Link>
                     </>
                 )}
