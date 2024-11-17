@@ -78,7 +78,7 @@ function Sidebar() {
                             <FiFileText  />
                             {isOpen && <span>Bon de commande</span>}
                         </Link>
-                        <Link to="/clients" className={location.pathname === "/clients" ? "active" : ""}>
+                        <Link to="/fournissseur" className={location.pathname === "/fournissseur" ? "active" : ""}>
                             <FiUsers />
                             {isOpen && <span>Fournisseur</span>}
                         </Link>
