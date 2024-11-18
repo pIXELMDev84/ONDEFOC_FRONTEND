@@ -1,7 +1,6 @@
-// src/components/Sidebar.js
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FiMenu, FiHome, FiSettings, FiUser, FiUsers, FiLogOut,FiFileText } from "react-icons/fi"; // Import FiLogOut icon
+import { FiMenu, FiHome, FiSettings, FiUser, FiUsers, FiLogOut, FiFileText } from "react-icons/fi"; // Import FiLogOut icon
 import "../css/Sidebar.css";
 import logo from "../images/LOGO-ONDEFOC_BLAN.png";
 
@@ -23,8 +22,8 @@ function Sidebar() {
     };
 
     const handleLogout = () => {
-        localStorage.removeItem("user"); // Clear user data
-        navigate("/login"); // Redirect to login page
+        localStorage.removeItem("user");
+        navigate("/login"); 
     };
 
     return (
@@ -33,13 +32,11 @@ function Sidebar() {
                 <FiMenu />
             </div>
 
-            {/* Logo section, displayed only when the sidebar is open */}
             {isOpen && (
                 <div className="sidebar-logo">
                     <img src={logo} alt="Company Logo" />
                 </div>
             )}
-
             <nav>
                 {/* Dashboard Link */}
                 <Link to="/dashboard" className={location.pathname === "/dashboard" ? "active" : ""}>
@@ -47,19 +44,22 @@ function Sidebar() {
                     {isOpen && <span> Dashboard</span>}
                 </Link>
 
-                {/* Settings Link */}
-                {userRole === "admin" ? (
+                {/* Settings Link - Admin */}
+                {userRole === "admin" && (
                     <Link to="/settings" className={location.pathname === "/settings" ? "active" : ""}>
-                        <FiSettings />
-                        {isOpen && <span> Paramètres</span>}
-                    </Link>
-                ) : (
-                    <Link to="/usersettings" className={location.pathname === "/usersettings" ? "active" : ""}>
                         <FiSettings />
                         {isOpen && <span> Paramètres</span>}
                     </Link>
                 )}
 
+                {/* Settings Link - User (Restricted to their own settings) */}
+                {userRole === "user" && (
+                    <Link to="/usersettings" className={location.pathname === "/usersettings" ? "active" : ""}>
+                        <FiSettings />
+                        {isOpen && <span> Paramètres</span>}
+                    </Link>
+                )}
+                {/* Admin-Only Links - Users and Clients */}
                 {userRole === "admin" && (
                     <>
                         <Link to="/users" className={location.pathname === "/users" ? "active" : ""}>
@@ -72,13 +72,18 @@ function Sidebar() {
                         </Link>
                     </>
                 )}
+                {/* Links for Magasinier */}
                 {userRole === "magasinier" && (
                     <>
+                        <Link to="/magsettings" className={location.pathname === "/magsettings" ? "active" : ""}>
+                            <FiSettings />
+                            {isOpen && <span> Paramètres </span>}
+                        </Link>
                         <Link to="/BonDeCommande/creation" className={location.pathname === "/BonDeCommande/creation" ? "active" : ""}>
-                            <FiFileText  />
+                            <FiFileText />
                             {isOpen && <span>Bon de commande</span>}
                         </Link>
-                        <Link to="/fournissseur" className={location.pathname === "/fournissseur" ? "active" : ""}>
+                        <Link to="/fournissseurlist" className={location.pathname === "/fournissseurlist" ? "active" : ""}>
                             <FiUsers />
                             {isOpen && <span>Fournisseur</span>}
                         </Link>

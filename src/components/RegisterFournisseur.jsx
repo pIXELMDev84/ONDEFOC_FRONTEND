@@ -6,19 +6,18 @@ import "../css/RegisterUser.css";
 function RegisterFournisseur() {
     const [nom, setNom] = useState("");
     const [prenom, setPrenom] = useState("");
-    const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
-    const [role, setRole] = useState("user");
-    const [password, setPassword] = useState("");
+    const [numTelephone, setNumTelephone] = useState("");
+    const [categorieId, setCategorieId] = useState(""); // Catégorie du fournisseur
     const [error, setError] = useState("");
-    const [success, setSuccess] = useState(""); // Nouvel état pour le message de succès
+    const [success, setSuccess] = useState(""); // Nouveau message de succès
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            const response = await fetch("http://localhost:8000/api/register", {
+            const response = await fetch("http://localhost:8000/api/fournisseurs/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -26,21 +25,20 @@ function RegisterFournisseur() {
                 body: JSON.stringify({
                     nom,
                     prenom,
-                    username,
                     email,
-                    role,
-                    password,
+                    num_telephone: numTelephone,
+                    categorie_id: categorieId,
                 }),
             });
 
             const data = await response.json();
 
             if (response.ok) {
-                setSuccess("Utilisateur enregistré avec succès !");
+                setSuccess("Fournisseur enregistré avec succès !");
                 setError("");
                 setTimeout(() => {
                     navigate("/dashboard");
-                }, 2000); // Redirige après 2 secondes
+                }, 2000);
             } else {
                 setError(data.message || "Une erreur est survenue lors de l'enregistrement.");
                 setSuccess("");
@@ -73,32 +71,30 @@ function RegisterFournisseur() {
                         required
                     />
                     <input
-                        type="text"
-                        placeholder="Nom d'utilisateur"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                    />
-                    <input
                         type="email"
                         placeholder="Email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
                     />
-                    <select value={role} onChange={(e) => setRole(e.target.value)} required>
-                        <option value="user">Cuisinier</option>
-                        <option value="admin">Administrateur</option>
-                        <option value="chefservice">Chef Service</option>
-                        <option value="magasinier">Magasinier</option>
-                    </select>
                     <input
-                        type="password"
-                        placeholder="Mot de passe"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        type="text"
+                        placeholder="Numéro de téléphone"
+                        value={numTelephone}
+                        onChange={(e) => setNumTelephone(e.target.value)}
                         required
                     />
+                    <select
+                        value={categorieId}
+                        onChange={(e) => setCategorieId(e.target.value)}
+                        required
+                    >
+                        <option value="">Sélectionner une catégorie</option>
+                        {/* Remplir avec les catégories existantes */}
+                        <option value="1">Catégorie 1</option>
+                        <option value="2">Catégorie 2</option>
+                        <option value="3">Catégorie 3</option>
+                    </select>
                     <button type="submit">Enregistrer</button>
                     {error && <p className="error-message">{error}</p>}
                     {success && <p className="success-message">{success}</p>}

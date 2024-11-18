@@ -9,6 +9,9 @@ import UserList from './components/UserList';
 import RegisterFournisseur from './components/RegisterFournisseur';
 import DashbordMagasinier from './components/DashbordMagasinier';
 import BonDeCommande from './components/BonDeCommande';
+import MagasinierSettings from './components/MagasinierSettings';
+import FournisseurList from './components/FournisseurList';
+
 
 
 
@@ -29,7 +32,9 @@ function App() {
                 <Route path="/settings/addFourni" element={<RegisterFournisseur />} />
                 <Route path="/users" element={<UserList/>} />
                 <Route path="/BonDeCommande/creation" element={<BonDeCommande/>} />
-
+                <Route path="/magsettings" element={<MagasinierSettings/>} />
+                <Route path="/fournissseurlist" element={<FournisseurList/>} />
+                
             </Routes>
         </Router>
     );
