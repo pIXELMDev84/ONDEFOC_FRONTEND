@@ -1,0 +1,87 @@
+.bon-de-commande-layout {
+    display: flex;
+    height: 100vh; /* Prendre toute la hauteur de l'écran */
+}
+
+.bon-de-commande-container {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto; /* Permet le défilement si le contenu dépasse */
+    background-color: #f9f9f9;
+    color: #000000;
+}
+.bon-de-commande-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2, h3 {
+    text-align: center;
+    color: #333;
+}
+
+.bon-de-commande-form .form-group {
+    margin-bottom: 15px;
+}
+
+.bon-de-commande-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.bon-de-commande-form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #000000;
+    border-radius: 4px;
+}
+
+.product-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.product-row input {
+    flex: 1;
+    padding: 5px;
+}
+
+.add-btn, .remove-btn, .submit-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.add-btn {
+    background-color: #28a745;
+}
+
+.remove-btn {
+    background-color: #dc3545;
+}
+
+.submit-btn {
+    width: 100%;
+    margin-top: 20px;
+    background-color: #007bff;
+}
+
+.total-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    font-weight: bold;
+}

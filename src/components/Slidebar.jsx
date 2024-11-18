@@ -74,7 +74,7 @@ function Sidebar() {
                 )}
                 {userRole === "magasinier" && (
                     <>
-                        <Link to="/cbdc" className={location.pathname === "/cbdc" ? "active" : ""}>
+                        <Link to="/BonDeCommande/creation" className={location.pathname === "/BonDeCommande/creation" ? "active" : ""}>
                             <FiFileText  />
                             {isOpen && <span>Bon de commande</span>}
                         </Link>

@@ -8,6 +8,8 @@ import RegisterUser from './components/RegisterUser';
 import UserList from './components/UserList';
 import RegisterFournisseur from './components/RegisterFournisseur';
 import DashbordMagasinier from './components/DashbordMagasinier';
+import BonDeCommande from './components/BonDeCommande';
+
 
 
 
@@ -26,6 +28,8 @@ function App() {
                 <Route path="/settings/addUser" element={<RegisterUser />} />
                 <Route path="/settings/addFourni" element={<RegisterFournisseur />} />
                 <Route path="/users" element={<UserList/>} />
+                <Route path="/BonDeCommande/creation" element={<BonDeCommande/>} />
+
             </Routes>
         </Router>
     );
