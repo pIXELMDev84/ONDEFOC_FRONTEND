@@ -1,157 +1,170 @@
-import React, { useState } from "react";
-import '../css/BonDeCommande.css';
-import Sidebar from "./Slidebar.jsx";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Sidebar from "./Slidebar.jsx";
+import "../css/BonDeCommande.css";
 
 const BonDeCommande = () => {
-    const [formData, setFormData] = useState({
-        bonNumber: "",
-        date: "",
-        clientName: "",
-        clientEmail: "",
-        clientPhone: "",
-        produits: [],
-    });
+  const [fournisseurId, setFournisseurId] = useState(1); // ID du fournisseur
+  const [fournisseurs, setFournisseurs] = useState([]); // Liste des fournisseurs
+  const [produitName, setProduitName] = useState('');
+  const [quantite, setQuantite] = useState(1);
+  const [prixUnitaire, setPrixUnitaire] = useState(0);
+  const [tva, setTva] = useState(0);
+  const [date, setDate] = useState('');
+  const [prixTotal, setPrixTotal] = useState(0); // Prix total calculé
+  const [message, setMessage] = useState('');
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
+  // Fonction pour récupérer la liste des fournisseurs
+  useEffect(() => {
+    const fetchFournisseurs = async () => {
+      try {
+        // Remplace l'URL par celle qui correspond à ton API pour récupérer les fournisseurs
+        const response = await axios.get('http://localhost:8000/api/fournisseurs');
+        setFournisseurs(response.data);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des fournisseurs", error);
+        setMessage('Erreur lors de la récupération des fournisseurs');
+      }
+    };
+    fetchFournisseurs();
+  }, []);
+
+  // Fonction pour calculer le prix total
+  const calculateTotalPrice = () => {
+    const total = prixUnitaire * quantite * (1 + tva / 100);
+    setPrixTotal(total);
+  };
+
+  // Fonction pour gérer la soumission du formulaire
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // Vérification simple des champs
+    if (!produitName || !date) {
+      setMessage('Veuillez remplir tous les champs.');
+      return;
+    }
+
+    const data = {
+      fournisseur_id: fournisseurId,
+      produit_name: produitName,
+      quantite: quantite,
+      prix_unitaire: prixUnitaire,
+      tva: tva,
+      date: date,
     };
 
-    const handleAddProduct = () => {
-        setFormData({
-            ...formData,
-            produits: [...formData.produits, { name: "", quantity: 1, price: 0 }],
-        });
-    };
+    try {
+      // Envoi des données au backend Laravel
+      const response = await axios.post('http://localhost:8000/api/bdcm', data);
 
-    const handleProductChange = (index, e) => {
-        const { name, value } = e.target;
-        const updatedProduits = [...formData.produits];
-        updatedProduits[index][name] = value;
-        setFormData({
-            ...formData,
-            produits: updatedProduits,
-        });
-    };
+      // Affichage du message de succès et de la réponse du backend
+      setMessage('Bon de commande créé avec succès');
+      console.log(response.data);
+    } catch (error) {
+      console.error('Erreur lors de la création du bon de commande', error);
+      setMessage('Erreur lors de la création du bon de commande');
+    }
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Exemple de requête axios pour envoyer les données
-        axios.post("http://127.0.0.1:8000/api/bon-de-commande", formData)
-            .then(response => {
-                console.log("Bon de commande créé avec succès", response);
-                // Réinitialiser le formulaire ou rediriger l'utilisateur
-            })
-            .catch(error => {
-                console.error("Erreur lors de la création du bon de commande", error);
-            });
-    };
+  return (
+    <div className="dashboard">
+      <Sidebar />
+      <div className="form-container">
+        <h2>Créer un bon de commande</h2>
+        {message && <p className="error">{message}</p>}
 
-    return (
-        <div className="dashboard">
-            <Sidebar />
-            <div className="bon-de-commande-container">
-                <h2>Créer un Bon de Commande</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label>Numéro du Bon :</label>
-                        <input
-                            type="text"
-                            name="bonNumber"
-                            value={formData.bonNumber}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Date :</label>
-                        <input
-                            type="date"
-                            name="date"
-                            value={formData.date}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Nom du Client :</label>
-                        <input
-                            type="text"
-                            name="clientName"
-                            value={formData.clientName}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Email du Client :</label>
-                        <input
-                            type="email"
-                            name="clientEmail"
-                            value={formData.clientEmail}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Téléphone du Client :</label>
-                        <input
-                            type="tel"
-                            name="clientPhone"
-                            value={formData.clientPhone}
-                            onChange={handleInputChange}
-                        />
-                    </div>
+        <form className="form" onSubmit={handleSubmit}>
+          <div>
+            <label>Nom du produit:</label>
+            <input
+              type="text"
+              value={produitName}
+              onChange={(e) => setProduitName(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label>Quantité:</label>
+            <input
+              type="number"
+              value={quantite}
+              onChange={(e) => {
+                setQuantite(e.target.value);
+                calculateTotalPrice();
+              }}
+              min="1"
+              required
+            />
+          </div>
+          <div>
+            <label>Prix unitaire:</label>
+            <input
+              type="number"
+              value={prixUnitaire}
+              onChange={(e) => {
+                setPrixUnitaire(e.target.value);
+                calculateTotalPrice();
+              }}
+              min="0"
+              step="0.01"
+              required
+            />
+          </div>
+          <div>
+            <label>TVA (%):</label>
+            <input
+              type="number"
+              value={tva}
+              onChange={(e) => {
+                setTva(e.target.value);
+                calculateTotalPrice();
+              }}
+              min="0"
+              max="100"
+              required
+            />
+          </div>
+          <div>
+            <label>Date:</label>
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              required
+            />
+          </div>
 
-                    <h3>Produits</h3>
-                    {formData.produits.map((product, index) => (
-                        <div key={index} className="product-group">
-                            <div className="form-group">
-                                <label>Nom du Produit :</label>
-                                <input
-                                    type="text"
-                                    name="name"
-                                    value={product.name}
-                                    onChange={(e) => handleProductChange(index, e)}
-                                    required
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Quantité :</label>
-                                <input
-                                    type="number"
-                                    name="quantity"
-                                    value={product.quantity}
-                                    onChange={(e) => handleProductChange(index, e)}
-                                    min="1"
-                                    required
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Prix Unitaire :</label>
-                                <input
-                                    type="number"
-                                    name="price"
-                                    value={product.price}
-                                    onChange={(e) => handleProductChange(index, e)}
-                                    min="0"
-                                    required
-                                />
-                            </div>
-                        </div>
-                    ))}
-                    <button type="button" onClick={handleAddProduct}>Ajouter un Produit</button>
+          {/* Sélection du fournisseur */}
+          <div>
+            <label>Fournisseur:</label>
+            <select
+              value={fournisseurId}
+              onChange={(e) => setFournisseurId(e.target.value)}
+              required
+            >
+              {fournisseurs.map(fournisseur => (
+                <option key={fournisseur.id} value={fournisseur.id}>
+                  {fournisseur.nom}
+                </option>
+              ))}
+            </select>
+          </div>
 
-                    <div className="form-group">
-                        <button type="submit">Créer le Bon de Commande</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    );
-}
+          <div>
+            <label>Prix total:</label>
+            <input
+              type="number"
+              value={prixTotal}
+              readOnly
+            />
+          </div>
+
+          <button type="submit">Créer le bon de commande</button>
+        </form>
+      </div>
+    </div>
+  );
+};
 
 export default BonDeCommande;

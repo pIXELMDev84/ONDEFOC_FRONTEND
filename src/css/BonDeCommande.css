@@ -1,87 +1,55 @@
-.bon-de-commande-layout {
-    display: flex;
-    height: 100vh; /* Prendre toute la hauteur de l'écran */
+/* Conteneur principal */
+.form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  color: #333;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.bon-de-commande-container {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto; /* Permet le défilement si le contenu dépasse */
-    background-color: #f9f9f9;
-    color: #000000;
-}
-.bon-de-commande-container {
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
-    background: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+/* Titre */
+h2 {
+  text-align: center;
+  color: #333;
 }
 
-h2, h3 {
-    text-align: center;
-    color: #333;
+/* Formulaire */
+.form {
+  display: flex;
+  flex-direction: column;
 }
 
-.bon-de-commande-form .form-group {
-    margin-bottom: 15px;
+/* Labels */
+label {
+  margin: 10px 0 5px;
+  font-weight: bold;
 }
 
-.bon-de-commande-form label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
+/* Champs de saisie */
+input, select, button {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-.bon-de-commande-form input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #000000;
-    border-radius: 4px;
+/* Bouton de soumission */
+button {
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.product-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
+button:hover {
+  background-color: #45a049;
 }
 
-.product-row input {
-    flex: 1;
-    padding: 5px;
-}
-
-.add-btn, .remove-btn, .submit-btn {
-    display: inline-block;
-    padding: 10px 15px;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.add-btn {
-    background-color: #28a745;
-}
-
-.remove-btn {
-    background-color: #dc3545;
-}
-
-.submit-btn {
-    width: 100%;
-    margin-top: 20px;
-    background-color: #007bff;
-}
-
-.total-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 15px;
-    font-weight: bold;
+/* Message d'erreur ou de succès */
+.error {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 15px;
 }
