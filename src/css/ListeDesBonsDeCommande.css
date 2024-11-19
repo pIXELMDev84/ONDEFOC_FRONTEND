@@ -154,3 +154,27 @@
 .cancel-button:hover {
   background-color: #c82333;
 }
+.actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.delete-button,
+.download-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s ease;
+}
+
+.delete-button:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+.download-button:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
