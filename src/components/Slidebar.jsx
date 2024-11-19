@@ -79,7 +79,7 @@ function Sidebar() {
                             <FiSettings />
                             {isOpen && <span> Paramètres </span>}
                         </Link>
-                        <Link to="/BonDeCommande/creation" className={location.pathname === "/BonDeCommande/creation" ? "active" : ""}>
+                        <Link to="/ListeDesBonsDeCommande" className={location.pathname === "/ListeDesBonsDeCommande" ? "active" : ""}>
                             <FiFileText />
                             {isOpen && <span>Bon de commande</span>}
                         </Link>

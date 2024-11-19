@@ -11,6 +11,8 @@ import DashbordMagasinier from './components/DashbordMagasinier';
 import BonDeCommande from './components/BonDeCommande';
 import MagasinierSettings from './components/MagasinierSettings';
 import FournisseurList from './components/FournisseurList';
+import ListeDesBonsDeCommande from './components/ListeDesBonsDeCommande';
+
 
 
 
@@ -34,6 +36,9 @@ function App() {
                 <Route path="/BonDeCommande/creation" element={<BonDeCommande/>} />
                 <Route path="/magsettings" element={<MagasinierSettings/>} />
                 <Route path="/fournissseurlist" element={<FournisseurList/>} />
+                <Route path="/ListeDesBonsDeCommande" element={<ListeDesBonsDeCommande/>} />
+
+                
                 
             </Routes>
         </Router>

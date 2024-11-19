@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Sidebar from "./Slidebar.jsx";
-import { FiEdit, FiTrash2 } from "react-icons/fi"; // Import des icônes
-import "../css/FournisseurList.css";  // Réutilisation du CSS
+import { FiEdit, FiTrash2 } from "react-icons/fi";
+import "../css/FournisseurList.css";
 
 function Popup({ message, onConfirm, onCancel }) {
     return (
@@ -107,7 +107,7 @@ function FournisseurList() {
                                 <td className="fournisseur-subname">{fournisseur.prenom}</td>
 
                                 <td>{fournisseur.email}</td>
-                                <td>{fournisseur.num_telephone}</td> {/* Modifié ici */}
+                                <td>{fournisseur.num_telephone}</td>
                                 <td className="fournisseur-actions">
                                     <button
                                         className="edit-button"
