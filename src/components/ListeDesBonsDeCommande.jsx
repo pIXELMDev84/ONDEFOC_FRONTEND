@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { FiTrash2, FiDownload } from "react-icons/fi"; // Import des icônes nécessaires
+import { FiTrash2, FiDownload } from "react-icons/fi";
 import Sidebar from "../components/Slidebar.jsx";
 import "../css/ListeDesBonsDeCommande.css";
 
 const ListeDesBonsDeCommande = () => {
   const [bonsDeCommande, setBonsDeCommande] = useState([]); // Liste des bons de commande
   const [message, setMessage] = useState("");
+  const [showConfirmPopup, setShowConfirmPopup] = useState(false); // Pour afficher la popup
+  const [selectedBonId, setSelectedBonId] = useState(null); // ID du bon sélectionné pour suppression
 
-  // Fonction pour récupérer les bons de commande depuis le backend
   useEffect(() => {
     const fetchBonsDeCommande = async () => {
       try {
@@ -28,13 +29,26 @@ const ListeDesBonsDeCommande = () => {
   // Fonction pour supprimer un bon de commande
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/abdcm/${id}`);
+      await axios.delete(`http://localhost:8000/api/supr/bdcm/${id}`);
       setBonsDeCommande((prev) => prev.filter((bon) => bon.id !== id));
       alert("Bon de commande supprimé avec succès.");
     } catch (error) {
       console.error("Erreur lors de la suppression du bon de commande", error);
       alert("Une erreur est survenue lors de la suppression.");
     }
+    setShowConfirmPopup(false); // Ferme la popup après suppression
+  };
+
+  // Fonction pour ouvrir la popup de confirmation
+  const openConfirmationPopup = (id) => {
+    setSelectedBonId(id);
+    setShowConfirmPopup(true);
+  };
+
+  // Fonction pour annuler la suppression
+  const cancelDelete = () => {
+    setShowConfirmPopup(false);
+    setSelectedBonId(null);
   };
 
   // Fonction pour télécharger un bon de commande
@@ -43,21 +57,17 @@ const ListeDesBonsDeCommande = () => {
       const response = await axios.get(
         `http://localhost:8000/api/bdcm/${id}/pdf`,
         {
-          responseType: "blob", // Important pour les fichiers binaires
-          headers: {
-            "Access-Control-Allow-Origin": "http://localhost:5173", // Ajoute cet en-tête CORS
-          }
+          responseType: "blob",
         }
       );
-  
-      // Créer un lien pour télécharger le fichier
+
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", `Bon_de_commande_${id}.pdf`); // Nom du fichier
+      link.setAttribute("download", `Bon_de_commande_${id}.pdf`);
       document.body.appendChild(link);
       link.click();
-      link.remove(); // Nettoyer le DOM après le téléchargement
+      link.remove();
     } catch (error) {
       console.error("Erreur lors du téléchargement du bon de commande", error);
       alert("Une erreur est survenue lors du téléchargement du fichier.");
@@ -77,7 +87,7 @@ const ListeDesBonsDeCommande = () => {
               <th>Code du bon</th>
               <th>Fournisseur</th>
               <th>Téléphone du fournisseur</th>
-              <th>Actions</th> {/* Nouvelle colonne pour les actions */}
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -91,7 +101,7 @@ const ListeDesBonsDeCommande = () => {
                     {/* Bouton pour supprimer */}
                     <button
                       className="delete-button"
-                      onClick={() => handleDelete(bon.id)}
+                      onClick={() => openConfirmationPopup(bon.id)}
                       title="Supprimer"
                     >
                       <FiTrash2 size={18} color="red" />
@@ -116,6 +126,27 @@ const ListeDesBonsDeCommande = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Popup de confirmation */}
+      {showConfirmPopup && (
+        <div className="popup-overlay">
+          <div className="popup">
+            <h3>Confirmation</h3>
+            <p>Êtes-vous sûr de vouloir supprimer ce bon de commande ?</p>
+            <div className="popup-actions">
+              <button
+                className="confirm-button"
+                onClick={() => handleDelete(selectedBonId)}
+              >
+                Oui, supprimer
+              </button>
+              <button className="cancel-button" onClick={cancelDelete}>
+                Annuler
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
