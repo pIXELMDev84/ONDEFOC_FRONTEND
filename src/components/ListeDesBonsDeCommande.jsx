@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FiTrash2, FiDownload } from "react-icons/fi";
 import Sidebar from "../components/Slidebar.jsx";
+import whatsappIcon from "../images/Whatsapp.png";
+import gmailIcon from "../images/Gmail.png"; 
 import "../css/ListeDesBonsDeCommande.css";
 
 const ListeDesBonsDeCommande = () => {
@@ -74,6 +76,18 @@ const ListeDesBonsDeCommande = () => {
     }
   };
 
+  // Fonction pour envoyer via WhatsApp
+  const handleSendWhatsApp = (telephone) => {
+    const whatsappURL = `https://wa.me/${telephone}`;
+    window.open(whatsappURL, "_blank");
+  };
+
+  // Fonction pour envoyer via Gmail
+  const handleSendGmail = (email) => {
+    const mailtoLink = `mailto:${email}`;
+    window.location.href = mailtoLink;
+  };
+
   return (
     <div className="dashboard">
       <Sidebar />
@@ -88,6 +102,7 @@ const ListeDesBonsDeCommande = () => {
               <th>Fournisseur</th>
               <th>Téléphone du fournisseur</th>
               <th>Actions</th>
+              <th>Envoyer</th> {/* Nouvelle colonne */}
             </tr>
           </thead>
           <tbody>
@@ -112,15 +127,42 @@ const ListeDesBonsDeCommande = () => {
                       className="download-button"
                       onClick={() => handleDownload(bon.id)}
                       title="Télécharger"
-                    >
+                    >  
                       <FiDownload size={18} color="green" />
+                    </button>
+                  </td>
+                  <td className="send-icons">
+                    {/* WhatsApp */}
+                    <button
+                      className="whatsapp-button"
+                      onClick={() => handleSendWhatsApp(bon.fournisseur.num_telephone)}
+                      title="Envoyer via WhatsApp"
+                    >
+                      <img
+                        src={whatsappIcon}
+                        alt="WhatsApp"
+                        className="icon"
+                      />
+                    </button>
+
+                    {/* Gmail */}
+                    <button
+                      className="gmail-button"
+                      onClick={() => handleSendGmail(bon.fournisseur.email)}
+                      title="Envoyer via Gmail"
+                    >
+                      <img
+                        src={gmailIcon}
+                        alt="Gmail"
+                        className="icon"
+                      />
                     </button>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="4">Aucun bon de commande trouvé</td>
+                <td colSpan="5">Aucun bon de commande trouvé</td>
               </tr>
             )}
           </tbody>

@@ -7,7 +7,6 @@
   padding: 20px;
 }
 
-
 .bons-table{
   width: 100%;
   border-collapse: collapse;
@@ -137,12 +136,6 @@
   font-size: 1em;
 }
 
-.actions {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
-}
 
 .delete-button,
 .download-button {
@@ -215,4 +208,40 @@
 
 .cancel-button:hover {
   background-color: darkgray;
+}
+.send-icons {
+  display: flex;
+  justify-content: space-around; /* Espacement égal entre les icônes */
+  align-items: center;
+}
+
+/* Style pour chaque bouton */
+.whatsapp-button,
+.gmail-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.whatsapp-button:hover,
+.gmail-button:hover {
+  transform: scale(1.1); /* Agrandissement de l'icône au survol */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Ombre portée au survol */
+}
+
+/* Style des icônes */
+.icon {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%; /* Pour arrondir les bords des icônes */
+  transition: opacity 0.3s ease;
+}
+
+/* Réduction de l'opacité au survol */
+.whatsapp-button:hover .icon,
+.gmail-button:hover .icon {
+  opacity: 0.8;
 }

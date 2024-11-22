@@ -4,21 +4,20 @@ import Sidebar from "./Slidebar.jsx";
 import "../css/BonDeCommande.css";
 
 const BonDeCommande = () => {
-  const [fournisseurId, setFournisseurId] = useState(1); // ID du fournisseur
-  const [fournisseurs, setFournisseurs] = useState([]); // Liste des fournisseurs
+  const [fournisseurId, setFournisseurId] = useState(1);
+  const [fournisseurs, setFournisseurs] = useState([]);
   const [produitName, setProduitName] = useState('');
   const [quantite, setQuantite] = useState(1);
   const [prixUnitaire, setPrixUnitaire] = useState(0);
   const [tva, setTva] = useState(0);
   const [date, setDate] = useState('');
-  const [prixTotal, setPrixTotal] = useState(0); // Prix total calculé
+  const [prixTotal, setPrixTotal] = useState(0);
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false); // Ajout de l'état de chargement
 
-  // Fonction pour récupérer la liste des fournisseurs
   useEffect(() => {
     const fetchFournisseurs = async () => {
       try {
-        // Remplace l'URL par celle qui correspond à ton API pour récupérer les fournisseurs
         const response = await axios.get('http://localhost:8000/api/fournisseurs');
         setFournisseurs(response.data);
       } catch (error) {
@@ -29,17 +28,14 @@ const BonDeCommande = () => {
     fetchFournisseurs();
   }, []);
 
-  // Fonction pour calculer le prix total
   const calculateTotalPrice = () => {
     const total = prixUnitaire * quantite * (1 + tva / 100);
     setPrixTotal(total);
   };
 
-  // Fonction pour gérer la soumission du formulaire
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Vérification simple des champs
     if (!produitName || !date) {
       setMessage('Veuillez remplir tous les champs.');
       return;
@@ -54,16 +50,17 @@ const BonDeCommande = () => {
       date: date,
     };
 
-    try {
-      // Envoi des données au backend Laravel
-      const response = await axios.post('http://localhost:8000/api/bdcm', data);
+    setLoading(true); // Début du chargement
 
-      // Affichage du message de succès et de la réponse du backend
+    try {
+      const response = await axios.post('http://localhost:8000/api/bdcm', data);
       setMessage('Bon de commande créé avec succès');
       console.log(response.data);
     } catch (error) {
       console.error('Erreur lors de la création du bon de commande', error);
       setMessage('Erreur lors de la création du bon de commande');
+    } finally {
+      setLoading(false); // Fin du chargement
     }
   };
 
@@ -135,7 +132,6 @@ const BonDeCommande = () => {
             />
           </div>
 
-          {/* Sélection du fournisseur */}
           <div>
             <label>Fournisseur:</label>
             <select
@@ -160,9 +156,15 @@ const BonDeCommande = () => {
             />
           </div>
 
-          <button type="submit">Créer le bon de commande</button>
+          <button type="submit" disabled={loading}>Créer le bon de commande</button>
         </form>
       </div>
+
+      {loading && (
+        <div className="loading">
+          <div className="spinner"></div>
+        </div>
+      )}
     </div>
   );
 };
