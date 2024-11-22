@@ -76,11 +76,21 @@ const ListeDesBonsDeCommande = () => {
     }
   };
 
-  // Fonction pour envoyer via WhatsApp
-  const handleSendWhatsApp = (telephone) => {
-    const whatsappURL = `https://wa.me/${telephone}`;
-    window.open(whatsappURL, "_blank");
-  };
+// Fonction pour envoyer via WhatsApp
+// Fonction pour envoyer via WhatsApp
+const handleSendWhatsApp = (telephone, id) => {
+  // Vérifie si le numéro commence par "0", c'est le cas des numéros algériens sans le code pays
+  if (telephone.startsWith("0")) {
+    telephone = `+213${telephone.slice(1)}`; // Remplace le "0" initial par le code pays +213
+  }
+
+  const pdfURL = `http://localhost:8000/api/bdcm/${id}/pdf`; // Lien vers le PDF du bon de commande
+  const message = `Bonjour, voici le bon de commande: ${pdfURL}`; // Message avec le lien vers le PDF
+  const whatsappURL = `https://wa.me/${telephone}?text=${encodeURIComponent(message)}`;
+  window.open(whatsappURL, "_blank");
+};
+
+
 
   // Fonction pour envoyer via Gmail
   const handleSendGmail = (email) => {
@@ -135,7 +145,7 @@ const ListeDesBonsDeCommande = () => {
                     {/* WhatsApp */}
                     <button
                       className="whatsapp-button"
-                      onClick={() => handleSendWhatsApp(bon.fournisseur.num_telephone)}
+                      onClick={() => handleSendWhatsApp(bon.fournisseur.num_telephone, bon.id)}
                       title="Envoyer via WhatsApp"
                     >
                       <img
