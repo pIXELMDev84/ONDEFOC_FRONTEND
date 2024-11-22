@@ -84,11 +84,18 @@ const handleSendWhatsApp = (telephone, id) => {
     telephone = `+213${telephone.slice(1)}`; // Remplace le "0" initial par le code pays +213
   }
 
-  const pdfURL = `http://localhost:8000/api/bdcm/${id}/pdf`; // Lien vers le PDF du bon de commande
-  const message = `Bonjour, voici le bon de commande: ${pdfURL}`; // Message avec le lien vers le PDF
+  // Lien vers le PDF du bon de commande
+  const pdfURL = `http://localhost:8000/api/bdcm/${id}/pdf`; 
+
+  // Message contenant le lien vers le PDF
+  const message = `Bonjour, voici le bon de commande : ${pdfURL}`; 
+
+  // Crée l'URL pour WhatsApp avec le message
   const whatsappURL = `https://wa.me/${telephone}?text=${encodeURIComponent(message)}`;
+
+  // Ouvre WhatsApp avec l'URL générée
   window.open(whatsappURL, "_blank");
-};
+};;
 
 
 
