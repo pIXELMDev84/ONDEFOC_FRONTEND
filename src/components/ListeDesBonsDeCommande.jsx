@@ -15,11 +15,21 @@ const ListeDesBonsDeCommande = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
+
+    const user = localStorage.getItem("user");
+    if (!user) {
+      
+      window.location.href = "/login";
+    } else {
+      // Afficher les informations de l'utilisateur dans la console
+      console.log("Utilisateur connecté :", JSON.parse(user));
+    }
+
     const fetchBonsDeCommande = async () => {
       try {
         const response = await axios.get("http://localhost:8000/api/abdcm");
         setBonsDeCommande(response.data);
-        setFilteredBons(response.data); // Initial filtering with all data
+        setFilteredBons(response.data);
       } catch (error) {
         console.error("Erreur lors de la récupération des bons de commande", error);
         setMessage("Erreur lors de la récupération des bons de commande");
@@ -32,7 +42,7 @@ const ListeDesBonsDeCommande = () => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
     if (term === "") {
-      setFilteredBons(bonsDeCommande); // Show all if search is cleared
+      setFilteredBons(bonsDeCommande);
     } else {
       const filtered = bonsDeCommande.filter((bon) => {
         const { code, fournisseur, created_at } = bon;
