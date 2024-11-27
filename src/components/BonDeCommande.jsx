@@ -4,6 +4,7 @@ import Sidebar from "./Slidebar.jsx";
 import "../css/BonDeCommande.css";
 
 const BonDeCommande = () => {
+  // États existants
   const [fournisseurId, setFournisseurId] = useState(1);
   const [fournisseurs, setFournisseurs] = useState([]);
   const [produitName, setProduitName] = useState('');
@@ -12,7 +13,7 @@ const BonDeCommande = () => {
   const [tva, setTva] = useState(0);
   const [date, setDate] = useState('');
   const [prixTotal, setPrixTotal] = useState(0);
-  const [unite, setUnite] = useState('UNITE'); // Nouvel état pour l'unité
+  const [unite, setUnite] = useState('UNITE');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -27,6 +28,16 @@ const BonDeCommande = () => {
     "POT",
     "UNITE",
   ];
+
+  // Nouveau useEffect pour récupérer les informations de l'utilisateur
+  useEffect(() => {
+    const userData = localStorage.getItem("user"); // Remplacez "user" par la clé utilisée dans votre localStorage
+    if (userData) {
+      console.log("Données de l'utilisateur récupérées depuis localStorage :", JSON.parse(userData));
+    } else {
+      console.warn("Aucune donnée utilisateur trouvée dans le localStorage.");
+    }
+  }, []);
 
   useEffect(() => {
     const fetchFournisseurs = async () => {
@@ -55,7 +66,7 @@ const BonDeCommande = () => {
     }
   
     const data = {
-      fournisseur_id: parseInt(fournisseurId), // Conversion explicite en nombre
+      fournisseur_id: parseInt(fournisseurId),
       produit_name: produitName,
       quantite: parseInt(quantite, 10),
       prix_unitaire: parseFloat(prixUnitaire),
@@ -165,7 +176,7 @@ const BonDeCommande = () => {
             <label>Fournisseur:</label>
             <select
               value={fournisseurId}
-              onChange={(e) => setFournisseurId(Number(e.target.value))} // Conversion en nombre
+              onChange={(e) => setFournisseurId(Number(e.target.value))}
               required
             >
               {fournisseurs.map(fournisseur => (
