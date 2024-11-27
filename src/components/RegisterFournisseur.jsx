@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "./Slidebar.jsx";
 import "../css/RegisterUser.css";
@@ -8,10 +8,30 @@ function RegisterFournisseur() {
     const [prenom, setPrenom] = useState("");
     const [email, setEmail] = useState("");
     const [numTelephone, setNumTelephone] = useState("");
-    const [categorieId, setCategorieId] = useState(""); // Catégorie du fournisseur
+    const [categorieId, setCategorieId] = useState(""); // Catégorie sélectionnée
+    const [categories, setCategories] = useState([]); // Liste des catégories
     const [error, setError] = useState("");
-    const [success, setSuccess] = useState(""); // Nouveau message de succès
+    const [success, setSuccess] = useState("");
     const navigate = useNavigate();
+
+    // Récupérer les catégories depuis l'API
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await fetch("http://localhost:8000/api/categories");
+                if (response.ok) {
+                    const data = await response.json();
+                    setCategories(data); // Stocke les catégories dans le state
+                } else {
+                    console.error("Erreur lors de la récupération des catégories.");
+                }
+            } catch (error) {
+                console.error("Erreur réseau :", error);
+            }
+        };
+
+        fetchCategories();
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -27,7 +47,7 @@ function RegisterFournisseur() {
                     prenom,
                     email,
                     num_telephone: numTelephone,
-                    categorie_id: categorieId,
+                    categorie_id: categorieId, // Envoi de l'ID de la catégorie
                 }),
             });
 
@@ -84,17 +104,18 @@ function RegisterFournisseur() {
                         onChange={(e) => setNumTelephone(e.target.value)}
                         required
                     />
-                    <select
-                        value={categorieId}
-                        onChange={(e) => setCategorieId(e.target.value)}
-                        required
-                    >
-                        <option value="">Sélectionner une catégorie</option>
-                        {/* Remplir avec les catégories existantes */}
-                        <option value="1">Catégorie 1</option>
-                        <option value="2">Catégorie 2</option>
-                        <option value="3">Catégorie 3</option>
-                    </select>
+<select
+    value={categorieId}
+    onChange={(e) => setCategorieId(e.target.value)}
+    required
+>
+    <option value="">Sélectionnez une catégorie</option>
+    {categories.map((categorie) => (
+        <option key={categorie.id} value={categorie.id}>
+            {categorie.name} {/* Utilisez `name` au lieu de `nom` */}
+        </option>
+    ))}
+</select>
                     <button type="submit">Enregistrer</button>
                     {error && <p className="error-message">{error}</p>}
                     {success && <p className="success-message">{success}</p>}

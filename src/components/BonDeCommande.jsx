@@ -12,8 +12,21 @@ const BonDeCommande = () => {
   const [tva, setTva] = useState(0);
   const [date, setDate] = useState('');
   const [prixTotal, setPrixTotal] = useState(0);
+  const [unite, setUnite] = useState('UNITE'); // Nouvel état pour l'unité
   const [message, setMessage] = useState('');
-  const [loading, setLoading] = useState(false); // Ajout de l'état de chargement
+  const [loading, setLoading] = useState(false);
+
+  const unites = [
+    "BIDON",
+    "BOITE",
+    "BOT",
+    "BOUTEILLES",
+    "KILLOGRAME",
+    "PAQUETS",
+    "PLATEAU",
+    "POT",
+    "UNITE",
+  ];
 
   useEffect(() => {
     const fetchFournisseurs = async () => {
@@ -35,32 +48,35 @@ const BonDeCommande = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
     if (!produitName || !date) {
       setMessage('Veuillez remplir tous les champs.');
       return;
     }
-
+  
     const data = {
-      fournisseur_id: fournisseurId,
+      fournisseur_id: parseInt(fournisseurId), // Conversion explicite en nombre
       produit_name: produitName,
-      quantite: quantite,
-      prix_unitaire: prixUnitaire,
-      tva: tva,
+      quantite: parseInt(quantite, 10),
+      prix_unitaire: parseFloat(prixUnitaire),
+      tva: parseFloat(tva),
       date: date,
+      unite: unite,
     };
-
-    setLoading(true); // Début du chargement
-
+  
+    console.log("Données envoyées :", data);
+  
+    setLoading(true);
+  
     try {
       const response = await axios.post('http://localhost:8000/api/bdcm', data);
       setMessage('Bon de commande créé avec succès');
       console.log(response.data);
     } catch (error) {
-      console.error('Erreur lors de la création du bon de commande', error);
+      console.error('Erreur lors de la création du bon de commande', error.response ? error.response.data : error);
       setMessage('Erreur lors de la création du bon de commande');
     } finally {
-      setLoading(false); // Fin du chargement
+      setLoading(false);
     }
   };
 
@@ -93,6 +109,20 @@ const BonDeCommande = () => {
               min="1"
               required
             />
+          </div>
+          <div>
+            <label>Unité:</label>
+            <select
+              value={unite}
+              onChange={(e) => setUnite(e.target.value)}
+              required
+            >
+              {unites.map((u, index) => (
+                <option key={index} value={u}>
+                  {u}
+                </option>
+              ))}
+            </select>
           </div>
           <div>
             <label>Prix unitaire:</label>
@@ -131,12 +161,11 @@ const BonDeCommande = () => {
               required
             />
           </div>
-
           <div>
             <label>Fournisseur:</label>
             <select
               value={fournisseurId}
-              onChange={(e) => setFournisseurId(e.target.value)}
+              onChange={(e) => setFournisseurId(Number(e.target.value))} // Conversion en nombre
               required
             >
               {fournisseurs.map(fournisseur => (
@@ -146,7 +175,6 @@ const BonDeCommande = () => {
               ))}
             </select>
           </div>
-
           <div>
             <label>Prix total:</label>
             <input
@@ -155,7 +183,6 @@ const BonDeCommande = () => {
               readOnly
             />
           </div>
-
           <button type="submit" disabled={loading}>Créer le bon de commande</button>
         </form>
       </div>

@@ -245,3 +245,46 @@
 .gmail-button:hover .icon {
   opacity: 0.8;
 }
+.error-message {
+  background-color: #ff4c4c;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.validated-row {
+  background-color: #d4edda;
+  font-weight: bold;
+}
+
+.validated-option {
+  color: green;
+}
+
+.validated-text {
+  color: green;
+  font-weight: bold;
+}
+
+.notification {
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.notification.success {
+  background-color: #d4edda;
+  color: green;
+}
+
+.notification.error {
+  background-color: #f8d7da;
+  color: red;
+}

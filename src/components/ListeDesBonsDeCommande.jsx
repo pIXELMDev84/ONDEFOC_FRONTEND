@@ -1,68 +1,94 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FiTrash2, FiDownload } from "react-icons/fi";
-import Sidebar from "../components/Slidebar.jsx";
+import Sidebar from "./Slidebar.jsx";
 import whatsappIcon from "../images/Whatsapp.png";
-import gmailIcon from "../images/Gmail.png"; 
+import gmailIcon from "../images/Gmail.png";
 import "../css/ListeDesBonsDeCommande.css";
 
 const ListeDesBonsDeCommande = () => {
-  const [bonsDeCommande, setBonsDeCommande] = useState([]); // Liste des bons de commande
+  const [bonsDeCommande, setBonsDeCommande] = useState([]);
+  const [filteredBons, setFilteredBons] = useState([]);
   const [message, setMessage] = useState("");
-  const [showConfirmPopup, setShowConfirmPopup] = useState(false); // Pour afficher la popup
-  const [selectedBonId, setSelectedBonId] = useState(null); // ID du bon sélectionné pour suppression
+  const [showConfirmPopup, setShowConfirmPopup] = useState(false);
+  const [selectedBonId, setSelectedBonId] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchBonsDeCommande = async () => {
       try {
         const response = await axios.get("http://localhost:8000/api/abdcm");
         setBonsDeCommande(response.data);
+        setFilteredBons(response.data); // Initial filtering with all data
       } catch (error) {
-        console.error(
-          "Erreur lors de la récupération des bons de commande",
-          error
-        );
+        console.error("Erreur lors de la récupération des bons de commande", error);
         setMessage("Erreur lors de la récupération des bons de commande");
       }
     };
     fetchBonsDeCommande();
   }, []);
 
-  // Fonction pour supprimer un bon de commande
+  const handleSearch = (e) => {
+    const term = e.target.value.toLowerCase();
+    setSearchTerm(term);
+    if (term === "") {
+      setFilteredBons(bonsDeCommande); // Show all if search is cleared
+    } else {
+      const filtered = bonsDeCommande.filter((bon) => {
+        const { code, fournisseur, created_at } = bon;
+        return (
+          code.toLowerCase().includes(term) ||
+          fournisseur.nom.toLowerCase().includes(term) ||
+          new Date(created_at).toLocaleDateString().includes(term)
+        );
+      });
+      setFilteredBons(filtered);
+    }
+  };
+
+  const handleUpdateEtat = async (id, newEtat) => {
+    try {
+      await axios.put(`http://localhost:8000/api/bdcm/${id}/etat`, {
+        etat: newEtat,
+      });
+      setBonsDeCommande((prev) =>
+        prev.map((bon) => (bon.id === id ? { ...bon, etat: newEtat } : bon))
+      );
+      setMessage({ text: "L'état du bon de commande a été mis à jour.", type: "success" });
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour de l'état", error);
+      setMessage({ text: "Une erreur est survenue lors de la mise à jour de l'état.", type: "error" });
+    }
+  };
+
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://localhost:8000/api/supr/bdcm/${id}`);
       setBonsDeCommande((prev) => prev.filter((bon) => bon.id !== id));
-      alert("Bon de commande supprimé avec succès.");
+      setMessage({ text: "Bon de commande supprimé avec succès.", type: "success" });
     } catch (error) {
       console.error("Erreur lors de la suppression du bon de commande", error);
-      alert("Une erreur est survenue lors de la suppression.");
+      setMessage({ text: "Une erreur est survenue lors de la suppression.", type: "error" });
     }
-    setShowConfirmPopup(false); // Ferme la popup après suppression
+    setShowConfirmPopup(false);
   };
 
-  // Fonction pour ouvrir la popup de confirmation
   const openConfirmationPopup = (id) => {
     setSelectedBonId(id);
     setShowConfirmPopup(true);
   };
 
-  // Fonction pour annuler la suppression
   const cancelDelete = () => {
     setShowConfirmPopup(false);
     setSelectedBonId(null);
   };
 
-  // Fonction pour télécharger un bon de commande
   const handleDownload = async (id) => {
     try {
       const response = await axios.get(
         `http://localhost:8000/api/bdcm/${id}/pdf`,
-        {
-          responseType: "blob",
-        }
+        { responseType: "blob" }
       );
-
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
@@ -70,36 +96,25 @@ const ListeDesBonsDeCommande = () => {
       document.body.appendChild(link);
       link.click();
       link.remove();
+      setMessage({ text: "Téléchargement réussi.", type: "success" });
     } catch (error) {
       console.error("Erreur lors du téléchargement du bon de commande", error);
-      alert("Une erreur est survenue lors du téléchargement du fichier.");
+      setMessage({ text: "Une erreur est survenue lors du téléchargement du fichier.", type: "error" });
     }
   };
 
-// Fonction pour envoyer via WhatsApp
-// Fonction pour envoyer via WhatsApp
-const handleSendWhatsApp = (telephone, id) => {
-  // Vérifie si le numéro commence par "0", c'est le cas des numéros algériens sans le code pays
-  if (telephone.startsWith("0")) {
-    telephone = `+213${telephone.slice(1)}`; // Remplace le "0" initial par le code pays +213
-  }
+  const handleSendWhatsApp = (telephone, id) => {
+    if (telephone.startsWith("0")) {
+      telephone = `+213${telephone.slice(1)}`;
+    }
+    const pdfURL = `http://localhost:8000/api/bdcm/${id}/pdf`;
+    const message = `Bonjour, voici le bon de commande : ${pdfURL}`;
+    const whatsappURL = `https://wa.me/${telephone}?text=${encodeURIComponent(
+      message
+    )}`;
+    window.open(whatsappURL, "_blank");
+  };
 
-  // Lien vers le PDF du bon de commande
-  const pdfURL = `http://localhost:8000/api/bdcm/${id}/pdf`; 
-
-  // Message contenant le lien vers le PDF
-  const message = `Bonjour, voici le bon de commande : ${pdfURL}`; 
-
-  // Crée l'URL pour WhatsApp avec le message
-  const whatsappURL = `https://wa.me/${telephone}?text=${encodeURIComponent(message)}`;
-
-  // Ouvre WhatsApp avec l'URL générée
-  window.open(whatsappURL, "_blank");
-};;
-
-
-
-  // Fonction pour envoyer via Gmail
   const handleSendGmail = (email) => {
     const mailtoLink = `mailto:${email}`;
     window.location.href = mailtoLink;
@@ -110,7 +125,20 @@ const handleSendWhatsApp = (telephone, id) => {
       <Sidebar />
       <div className="list-container">
         <h2>Liste des bons de commande</h2>
-        {message && <p className="error">{message}</p>}
+
+        <input
+          type="text"
+          placeholder="Rechercher par code, fournisseur ou date"
+          value={searchTerm}
+          onChange={handleSearch}
+          className="search-bar"
+        />
+
+        {message && (
+          <div className={`notification ${message.type}`}>
+            {message.text}
+          </div>
+        )}
 
         <table className="bons-table">
           <thead>
@@ -119,18 +147,18 @@ const handleSendWhatsApp = (telephone, id) => {
               <th>Fournisseur</th>
               <th>Téléphone du fournisseur</th>
               <th>Actions</th>
-              <th>Envoyer</th> {/* Nouvelle colonne */}
+              <th>Envoyer</th>
+              <th>État</th>
             </tr>
           </thead>
           <tbody>
-            {bonsDeCommande.length > 0 ? (
-              bonsDeCommande.map((bon) => (
-                <tr key={bon.id}>
+            {filteredBons.length > 0 ? (
+              filteredBons.map((bon) => (
+                <tr key={bon.id} className={bon.etat === "validé" ? "validated-row" : ""}>
                   <td>{bon.code}</td>
                   <td>{bon.fournisseur.nom}</td>
                   <td>{bon.fournisseur.num_telephone}</td>
                   <td className="actions">
-                    {/* Bouton pour supprimer */}
                     <button
                       className="delete-button"
                       onClick={() => openConfirmationPopup(bon.id)}
@@ -138,55 +166,58 @@ const handleSendWhatsApp = (telephone, id) => {
                     >
                       <FiTrash2 size={18} color="red" />
                     </button>
-
-                    {/* Bouton pour télécharger */}
                     <button
                       className="download-button"
                       onClick={() => handleDownload(bon.id)}
                       title="Télécharger"
-                    >  
+                    >
                       <FiDownload size={18} color="green" />
                     </button>
                   </td>
                   <td className="send-icons">
-                    {/* WhatsApp */}
                     <button
                       className="whatsapp-button"
-                      onClick={() => handleSendWhatsApp(bon.fournisseur.num_telephone, bon.id)}
+                      onClick={() =>
+                        handleSendWhatsApp(bon.fournisseur.num_telephone, bon.id)
+                      }
                       title="Envoyer via WhatsApp"
                     >
-                      <img
-                        src={whatsappIcon}
-                        alt="WhatsApp"
-                        className="icon"
-                      />
+                      <img src={whatsappIcon} alt="WhatsApp" className="icon" />
                     </button>
-
-                    {/* Gmail */}
                     <button
                       className="gmail-button"
                       onClick={() => handleSendGmail(bon.fournisseur.email)}
                       title="Envoyer via Gmail"
                     >
-                      <img
-                        src={gmailIcon}
-                        alt="Gmail"
-                        className="icon"
-                      />
+                      <img src={gmailIcon} alt="Gmail" className="icon" />
                     </button>
+                  </td>
+                  <td>
+                    {bon.etat !== "validé" ? (
+                      <select
+                        value={bon.etat}
+                        onChange={(e) => handleUpdateEtat(bon.id, e.target.value)}
+                      >
+                        <option value="En attente">En attente</option>
+                        <option value="validé" className="validated-option">
+                          validé
+                        </option>
+                      </select>
+                    ) : (
+                      <span className="validated-text">Validé</span>
+                    )}
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="5">Aucun bon de commande trouvé</td>
+                <td colSpan="6">Aucun bon de commande trouvé</td>
               </tr>
             )}
           </tbody>
         </table>
       </div>
 
-      {/* Popup de confirmation */}
       {showConfirmPopup && (
         <div className="popup-overlay">
           <div className="popup">
