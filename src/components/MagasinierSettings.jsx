@@ -26,6 +26,11 @@ function MagasinierSettings() {
                             <h2>Crée Un Bon De commande</h2>
                             <p>Crée un Bon De commande dans le système.</p>
                         </div>
+                        <div className="card" onClick={() => navigateTo("/AjouterProduit")}>
+                            <h2>ajouter un produit</h2>
+                            <p>ajouter un produit système.</p>
+                        </div>
+
                     </div>
                 </div>
             </div>

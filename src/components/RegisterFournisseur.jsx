@@ -9,6 +9,7 @@ function RegisterFournisseur() {
     const [email, setEmail] = useState("");
     const [numTelephone, setNumTelephone] = useState("");
     const [categorieId, setCategorieId] = useState(""); // Catégorie sélectionnée
+    const [adresse, setAdresse] = useState(""); // Nouvel état pour l'adresse
     const [categories, setCategories] = useState([]); // Liste des catégories
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
@@ -48,6 +49,7 @@ function RegisterFournisseur() {
                     email,
                     num_telephone: numTelephone,
                     categorie_id: categorieId, // Envoi de l'ID de la catégorie
+                    adresse, // Envoi de l'adresse
                 }),
             });
 
@@ -104,18 +106,25 @@ function RegisterFournisseur() {
                         onChange={(e) => setNumTelephone(e.target.value)}
                         required
                     />
-<select
-    value={categorieId}
-    onChange={(e) => setCategorieId(e.target.value)}
-    required
->
-    <option value="">Sélectionnez une catégorie</option>
-    {categories.map((categorie) => (
-        <option key={categorie.id} value={categorie.id}>
-            {categorie.name} {/* Utilisez `name` au lieu de `nom` */}
-        </option>
-    ))}
-</select>
+                    <input
+                        type="text"
+                        placeholder="Adresse"
+                        value={adresse}
+                        onChange={(e) => setAdresse(e.target.value)} // Ajout du champ pour l'adresse
+                        required
+                    />
+                    <select
+                        value={categorieId}
+                        onChange={(e) => setCategorieId(e.target.value)}
+                        required
+                    >
+                        <option value="">Sélectionnez une catégorie</option>
+                        {categories.map((categorie) => (
+                            <option key={categorie.id} value={categorie.id}>
+                                {categorie.name} {/* Utilisez `name` au lieu de `nom` */}
+                            </option>
+                        ))}
+                    </select>
                     <button type="submit">Enregistrer</button>
                     {error && <p className="error-message">{error}</p>}
                     {success && <p className="success-message">{success}</p>}

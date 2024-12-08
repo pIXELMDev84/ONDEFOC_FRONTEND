@@ -12,6 +12,8 @@ import BonDeCommande from './components/BonDeCommande';
 import MagasinierSettings from './components/MagasinierSettings';
 import FournisseurList from './components/FournisseurList';
 import ListeDesBonsDeCommande from './components/ListeDesBonsDeCommande';
+import AjouterProduit from './components/AjouterProduit';
+
 
 
 
@@ -37,6 +39,9 @@ function App() {
                 <Route path="/magsettings" element={<MagasinierSettings/>} />
                 <Route path="/fournissseurlist" element={<FournisseurList/>} />
                 <Route path="/ListeDesBonsDeCommande" element={<ListeDesBonsDeCommande/>} />
+                <Route path="/ListeDesBonsDeCommande" element={<ListeDesBonsDeCommande/>} />
+                <Route path="/AjouterProduit" element={<AjouterProduit/>} />
+
 
                 
                 

@@ -97,6 +97,7 @@ function FournisseurList() {
                             <th>Prenom</th>
                             <th>Email</th>
                             <th>Téléphone</th>
+                            <th>Adresse</th> {/* Added Address column */}
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -105,9 +106,9 @@ function FournisseurList() {
                             <tr key={fournisseur.id}>
                                 <td className="fournisseur-name">{fournisseur.nom}</td>
                                 <td className="fournisseur-subname">{fournisseur.prenom}</td>
-
                                 <td>{fournisseur.email}</td>
                                 <td>{fournisseur.num_telephone}</td>
+                                <td>{fournisseur.adresse}</td> {/* Display address */}
                                 <td className="fournisseur-actions">
                                     <button
                                         className="edit-button"
