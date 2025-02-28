@@ -32,8 +32,9 @@ body {
     width: 300px;
     text-align: center;
 }
+
 .login-logo {
-    width: 250px; /* Réduire la taille de l'image */
+    width: 250px;
     margin-bottom: 1rem;
     display: block;
     margin-left: auto;
@@ -53,7 +54,7 @@ input {
     border-radius: 4px;
 }
 
-.loginbtn{
+.loginbtn {
     width: 100%;
     padding: 10px;
     background-color: #82354b;
@@ -67,4 +68,30 @@ input {
 
 .loginbtn:hover {
     background-color: #994c62;
+}
+
+/* Style pour la case "Rester connecté" */
+.remember-me {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    font-size: 14px;
+    margin-top: 0.5rem;
+}
+
+.remember-me input {
+    margin-right: 8px;
+}
+
+/* Style pour le lien "Mot de passe oublié" */
+.forgot-password {
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #82354b;
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
 }

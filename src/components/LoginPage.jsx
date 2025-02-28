@@ -6,13 +6,14 @@ import logo from "../images/LOGO-ONDEFOC.png";
 function LoginPage() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState(""); // État pour le message d'erreur
+    const [rememberMe, setRememberMe] = useState(false);
+    const [error, setError] = useState("");
     const navigate = useNavigate();
 
     useEffect(() => {
         const user = localStorage.getItem("user");
         if (user) {
-            navigate("/dashboard"); // Rediriger vers le tableau de bord si l'utilisateur est déjà connecté
+            navigate("/dashboard");
         }
     }, [navigate]);
 
@@ -22,9 +23,7 @@ function LoginPage() {
         try {
             const response = await fetch("http://localhost:8000/api/login", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, password }),
             });
 
@@ -32,16 +31,20 @@ function LoginPage() {
             console.log("Réponse:", data);
 
             if (response.ok) {
+                if (rememberMe) {
+                    localStorage.setItem("user", JSON.stringify(data.user));
+                    localStorage.setItem("token", data.token);
+                } else {
+                    sessionStorage.setItem("user", JSON.stringify(data.user));
+                    sessionStorage.setItem("token", data.token);
+                }
 
-                localStorage.setItem("user", JSON.stringify(data.user));
-
-                // Rediriger en fonction du rôle de l'utilisateur
-                if (data.user && data.user.role === "admin") {
+                if (data.user.role === "admin") {
                     navigate("/dashboard");
-                } else if (data.user && data.user.role === "chefservice") {
-                    navigate("/dashboardUser");   
-                } else if (data.user && data.user.role === "magasinier") {
-                    navigate("/dashboardMagasinier"); 
+                } else if (data.user.role === "chefservice") {
+                    navigate("/dashboardUser");
+                } else if (data.user.role === "magasinier") {
+                    navigate("/dashboardMagasinier");
                 } else {
                     setError("Rôle non reconnu.");
                 }
@@ -73,8 +76,20 @@ function LoginPage() {
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
+                    <div className="remember-me">
+                        <input
+                            type="checkbox"
+                            id="rememberMe"
+                            checked={rememberMe}
+                            onChange={(e) => setRememberMe(e.target.checked)}
+                        />
+                        <label htmlFor="rememberMe">Rester connecté</label>
+                    </div>
                     <button className="loginbtn" type="submit">Se connecter</button>
                     {error && <p className="error-message">{error}</p>}
+                    <p>
+                        <a href="/forgot-password">Mot de passe oublié ?</a>
+                    </p>
                 </form>
             </div>
         </div>
