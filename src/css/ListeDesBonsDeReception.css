@@ -1,0 +1,141 @@
+
+  .list-container {
+    flex: 1;
+    padding: 2rem;
+    background-color: #f9f9f9;
+  }
+  
+  h2 {
+    margin-bottom: 1.5rem;
+    font-size: 24px;
+    color: #333;
+  }
+  
+  /* Barre de recherche */
+  .search-bar {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Table des bons */
+  .bons-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .bons-table th, .bons-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .bons-table th {
+    background-color: #82354b;
+    font-weight: bold;
+    color: #ffffff;
+  }
+  
+  .bons-table tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Boutons d'action */
+  .actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 0.5rem;
+  }
+  
+  .delete-button:hover {
+    color: red;
+  }
+  
+  .download-button:hover {
+    color: green;
+  }
+  
+  /* Notifications */
+  .notification {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .notification.success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+  
+  .notification.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
+  
+  /* Pop-up de confirmation */
+  .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .popup {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    width: 400px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  .popup h3 {
+    margin-bottom: 1rem;
+  }
+  
+  .popup-actions {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1.5rem;
+  }
+  
+  .confirm-button, .cancel-button {
+    padding: 0.5rem 1.5rem;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+  }
+  
+  .confirm-button {
+    background: red;
+    color: white;
+  }
+  
+  .cancel-button {
+    background: #ccc;
+    color: black;
+  }
+  
+  .confirm-button:hover {
+    background: darkred;
+  }
+  
+  .cancel-button:hover {
+    background: #b3b3b3;
+  }
+  

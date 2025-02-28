@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FiMenu, FiHome, FiSettings, FiUser, FiUsers, FiLogOut, FiFileText } from "react-icons/fi"; // Import FiLogOut icon
+import { FiMenu, FiHome, FiSettings, FiUser, FiUsers, FiLogOut, FiFileText, FiClipboard, FiCheckSquare, FiArchive, FiInbox } from "react-icons/fi"; // Import FiArchive for stock status
 import "../css/Sidebar.css";
 import logo from "../images/LOGO-ONDEFOC_BLAN.png";
 
@@ -44,6 +44,28 @@ function Sidebar() {
                     {isOpen && <span> Dashboard</span>}
                 </Link>
 
+
+                {userRole === "chefservice" && (
+                    <>
+                        <Link to="/chefsettings" className={location.pathname === "/chefsettings" ? "active" : ""}>
+                            <FiSettings />
+                            {isOpen && <span> Paramètres </span>}
+                        </Link>
+                        <Link to="/ListeDesBonsDeCommande" className={location.pathname === "/ListeDesBonsDeCommande" ? "active" : ""}>
+                            <FiFileText />
+                            {isOpen && <span>Bon de commande</span>}
+                        </Link>
+                        <Link to="/ListeDesBonsDeReception" className={location.pathname === "/ListeDesBonsDeReception" ? "active" : ""}>
+                            <FiCheckSquare />
+                            {isOpen && <span>Bons de réception</span>}
+                        </Link>
+                        <Link to="/EtatDeStock" className={location.pathname === "/EtatDeStock" ? "active" : ""}>
+          <FiArchive />
+          {isOpen && <span>État du Stock</span>}
+        </Link>
+                    </>
+                )}
+
                 {/* Settings Link - Admin */}
                 {userRole === "admin" && (
                     <Link to="/settings" className={location.pathname === "/settings" ? "active" : ""}>
@@ -59,6 +81,7 @@ function Sidebar() {
                         {isOpen && <span> Paramètres</span>}
                     </Link>
                 )}
+
                 {/* Admin-Only Links - Users and Clients */}
                 {userRole === "admin" && (
                     <>
@@ -66,12 +89,22 @@ function Sidebar() {
                             <FiUser />
                             {isOpen && <span> Utilisateurs</span>}
                         </Link>
-                        <Link to="/clients" className={location.pathname === "/clients" ? "active" : ""}>
-                            <FiUsers />
-                            {isOpen && <span> Clients</span>}
+                        <Link to="/ListeDesBonsDeCommande" className={location.pathname === "/ListeDesBonsDeCommande" ? "active" : ""}>
+                            <FiFileText />
+                            {isOpen && <span>Bon de commande</span>}
                         </Link>
+                        <Link to="/ListeDesBonsDeReception" className={location.pathname === "/ListeDesBonsDeReception" ? "active" : ""}>
+                            <FiCheckSquare />
+                            {isOpen && <span>Bons de réception</span>}
+                        </Link>
+                        <Link to="/EtatDeStock" className={location.pathname === "/EtatDeStock" ? "active" : ""}>
+          <FiArchive />
+          {isOpen && <span>État du Stock</span>}
+          </Link>
                     </>
                 )}
+                
+
                 {/* Links for Magasinier */}
                 {userRole === "magasinier" && (
                     <>
@@ -83,10 +116,14 @@ function Sidebar() {
                             <FiFileText />
                             {isOpen && <span>Bon de commande</span>}
                         </Link>
-                        <Link to="/fournissseurlist" className={location.pathname === "/fournissseurlist" ? "active" : ""}>
-                            <FiUsers />
-                            {isOpen && <span>Fournisseur</span>}
+                        <Link to="/ListeDesBonsDeReception" className={location.pathname === "/ListeDesBonsDeReception" ? "active" : ""}>
+                            <FiCheckSquare />
+                            {isOpen && <span>Bons de réception</span>}
                         </Link>
+                        <Link to="/EtatDeStock" className={location.pathname === "/EtatDeStock" ? "active" : ""}>
+          <FiArchive />
+          {isOpen && <span>État du Stock</span>}
+        </Link>
                     </>
                 )}
             </nav>

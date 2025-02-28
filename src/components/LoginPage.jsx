@@ -38,7 +38,7 @@ function LoginPage() {
                 // Rediriger en fonction du rôle de l'utilisateur
                 if (data.user && data.user.role === "admin") {
                     navigate("/dashboard");
-                } else if (data.user && data.user.role === "user") {
+                } else if (data.user && data.user.role === "chefservice") {
                     navigate("/dashboardUser");   
                 } else if (data.user && data.user.role === "magasinier") {
                     navigate("/dashboardMagasinier"); 

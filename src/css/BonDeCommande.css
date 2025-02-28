@@ -79,30 +79,31 @@ button:disabled {
 }
 
 .product-row button {
-  background-color: #e74c3c;
-  padding: 5px 10px;
-  border-radius: 5px;
-  margin-left: 10px;
+  background-color:#e74c3c; ;
+  padding: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #e74c3c;
+  transition: color 0.3s;
+  transition: transform 0.2s, opacity 0.2s ease;
+
 }
 
 .product-row button:hover {
-  background-color: #c0392b;
+  color: #c0392b;
 }
 
 button[type="button"] {
   display: flex;
   align-items: center;
   gap: 8px;
-  background-color: #3498db;
   padding: 8px 15px;
   color: white;
   border: none;
   border-radius: 5px;
 }
 
-button[type="button"]:hover {
-  background-color: #2980b9;
-}
 
 button[type="button"] svg {
   font-size: 1.2rem;

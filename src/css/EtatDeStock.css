@@ -1,0 +1,76 @@
+.dashboard {
+  display: flex;
+  height: 100vh;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #f4f4f4;
+  overflow-y: auto;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Stock global */
+.stock-overview {
+  margin-bottom: 30px;
+}
+
+.progress-bar-container {
+  background-color: #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 20px;
+  width: 100%;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #82354b;
+  text-align: center;
+  color: white;
+  line-height: 20px;
+  font-size: 14px;
+}
+
+/* Catégories */
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.category {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  width: 250px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.category:hover {
+  transform: translateY(-5px);
+}
+
+.category-icon {
+  color: #82354b;
+  margin-bottom: 10px;
+}
+
+.category h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.category p {
+  color: #666;
+  font-size: 14px;
+}

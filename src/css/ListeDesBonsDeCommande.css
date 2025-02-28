@@ -285,6 +285,32 @@
 }
 
 .notification.error {
-  background-color: #f8d7da;
+  background-color: #ecd7d9;
   color: red;
+}
+.filter-button {
+  background-color: #82354b; /* Bleu clair */
+  color: #fff; /* Blanc */
+  border: none;
+  border-radius: 8px; /* Coins arrondis */
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-bottom: 20px;
+}
+
+.filter-button:hover {
+  background-color: #8e455a; /* Bleu plus foncé au survol */
+  transform: scale(1.05); /* Légère mise en valeur */
+}
+
+.filter-button svg {
+  margin-right: 4px; /* Espacement entre l'icône et le texte */
+  color: white; /* Change la couleur de l'icône en blanc */
+
 }

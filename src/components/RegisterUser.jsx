@@ -11,7 +11,7 @@ function RegisterUser() {
     const [role, setRole] = useState("user");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-    const [success, setSuccess] = useState(""); // Nouvel état pour le message de succès
+    const [success, setSuccess] = useState("");
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -87,7 +87,6 @@ function RegisterUser() {
                         required
                     />
                     <select value={role} onChange={(e) => setRole(e.target.value)} required>
-                        <option value="user">Cuisinier</option>
                         <option value="admin">Administrateur</option>
                         <option value="chefservice">Chef Service</option>
                         <option value="magasinier">Magasinier</option>

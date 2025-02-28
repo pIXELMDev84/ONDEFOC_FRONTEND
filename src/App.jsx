@@ -13,11 +13,10 @@ import MagasinierSettings from './components/MagasinierSettings';
 import FournisseurList from './components/FournisseurList';
 import ListeDesBonsDeCommande from './components/ListeDesBonsDeCommande';
 import AjouterProduit from './components/AjouterProduit';
-
-
-
-
-
+import BonDeReception from './components/BonDeReception';
+import ListeDesBonsDeReception from './components/ListeDesBonsDeReception';
+import EtatDeStock from './components/EtatDeStock';
+import ChefSettings from './components/ChefSettings';
 
 
 function App() {
@@ -37,14 +36,15 @@ function App() {
                 <Route path="/users" element={<UserList/>} />
                 <Route path="/BonDeCommande/creation" element={<BonDeCommande/>} />
                 <Route path="/magsettings" element={<MagasinierSettings/>} />
+                <Route path="/chefsettings" element={<ChefSettings/>} />
                 <Route path="/fournissseurlist" element={<FournisseurList/>} />
                 <Route path="/ListeDesBonsDeCommande" element={<ListeDesBonsDeCommande/>} />
-                <Route path="/ListeDesBonsDeCommande" element={<ListeDesBonsDeCommande/>} />
                 <Route path="/AjouterProduit" element={<AjouterProduit/>} />
+                <Route path="/BonDeReseption/creation" element={<BonDeReception/>} />
+                <Route path="/ListeDesBonsDeReception" element={<ListeDesBonsDeReception/>} />
+                <Route path="/EtatDeStock" element={<EtatDeStock />} />
 
 
-                
-                
             </Routes>
         </Router>
     );

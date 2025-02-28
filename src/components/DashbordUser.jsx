@@ -11,8 +11,8 @@ function DashboardUser() {
     const greeting = user ? `Bonsoir, ${user.nom} ${user.prenom}` : "Bienvenue, Restaurateur"; // Message par défaut si aucun utilisateur
 
     const handleLogout = () => {
-        localStorage.removeItem('user'); // Supprimer les informations de l'utilisateur du stockage local
-        navigate("/login"); // Rediriger vers la page de connexion
+        localStorage.removeItem('user');
+        navigate("/login"); 
     };
 
    

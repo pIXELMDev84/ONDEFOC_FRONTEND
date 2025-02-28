@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Sidebar from "./Slidebar.jsx";
-import { FiPlus, FiX } from "react-icons/fi"; // Importer les icônes nécessaires
+import { FiPlus, FiX, FiTrash2 } from "react-icons/fi";
 import "../css/BonDeCommande.css";
 
 const BonDeCommande = () => {
@@ -96,13 +96,18 @@ const BonDeCommande = () => {
       })),
     };
 
+    console.log("Données envoyées :", data); // Log pour débogage
+
     setLoading(true);
     try {
       const response = await axios.post("http://localhost:8000/api/bdcm", data);
+      console.log("Réponse du serveur :", response.data); // Log pour débogage
       setMessage("Bon de commande créé avec succès");
-      console.log(response.data);
+      setFournisseurId("");
+      setDate("");
+      setSelectedProduits([]);
     } catch (error) {
-      console.error("Erreur lors de la création du bon de commande", error);
+      console.error("Erreur serveur :", error.response?.data || error.message);
       setMessage("Erreur lors de la création du bon de commande");
     } finally {
       setLoading(false);
@@ -166,7 +171,7 @@ const BonDeCommande = () => {
                 <span>TVA: {produit.tva}%</span>
                 <span>Unité: {produit.unite}</span>
                 <button type="button" onClick={() => handleRemoveProduct(index)}>
-                  <FiX /> Supprimer
+                  <FiTrash2 />
                 </button>
               </div>
             ))}
