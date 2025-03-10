@@ -35,6 +35,10 @@ function ChefSettings() {
                             <h2>Enregistrer un Fournisseur</h2>
                             <p>Ajoutez un nouveau compte Fournisseur dans le système.</p>
                         </div>
+                        <div className="card" onClick={() => navigateTo("/BonDeCommande/creation")}>
+                            <h2>Crée Un Bon De commande</h2>
+                            <p>Crée un Bon De commande dans le système.</p>
+                        </div>
 
                     </div>
                 </div>
