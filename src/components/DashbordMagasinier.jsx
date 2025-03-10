@@ -1,44 +1,39 @@
-import React, { useEffect, useState } from "react";
-import "../css/DashboardAdmin.css";
-import Sidebar from "./Slidebar.jsx";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Sidebar from "./Slidebar.jsx";
+import "../css/DashboardAdmin.css";
 
 function DashbordMagasinier() {
-    const user = JSON.parse(localStorage.getItem('user')); // Récupérer les informations de l'utilisateur
+    const user = JSON.parse(localStorage.getItem("user"));
     const navigate = useNavigate();
-    const [users, setUsers] = useState([]); // État pour stocker les utilisateurs
-
-    const greeting = user ? `Bonsoir, ${user.nom} ${user.prenom}` : "Bienvenue, Restaurateur"; // Message par défaut si aucun utilisateur
+    const [users, setUsers] = useState([]); // Stocke les autres utilisateurs
 
     const handleLogout = () => {
-        localStorage.removeItem('user'); // Supprimer les informations de l'utilisateur du stockage local
-        navigate("/login"); // Rediriger vers la page de connexion
+        localStorage.removeItem("user");
+        navigate("/login");
     };
 
-   
+    // Fonction pour récupérer l'initiale du nom
+    const getInitial = (name) => {
+        return name ? name.charAt(0).toUpperCase() : "?";
+    };
+
     return (
         <div className="dashboard">
-        <Sidebar /> {/* Ajout du menu latéral */}
-        <div className="main-content">
-            <header className="header">
-                <h1>Bienvenue, {user ? `${user.nom} ${user.prenom}` : "Admin"}</h1>
-                <button className="logout-button" onClick={handleLogout}>Déconnexion</button>
-            </header>
-        </div>
-                <section>
-                   
-                    <ul>
-                        {users
-                            .filter(u => u.id !== user.id) // Exclure l'utilisateur connecté
-                            .map(u => (
-                                <li key={u.id}>
-                                    {u.prenom} {u.nom} - {u.email} - {u.role}
-                                </li>
-                            ))}
-                    </ul>
-                </section>
+            <Sidebar />
+            <div className="main-content">
+                <div className="profile-card">
+                    <div className="profile-icon">
+                        {getInitial(user?.nom)}
+                    </div>
+                    <h2>{user ? `${user.nom} ${user.prenom}` : "Magasinier"}</h2>
+                    <p><strong>Username: </strong>{user?.username || "Non défini"}</p>
+                    <p><strong>Email:</strong> {user?.email || "Non défini"}</p>
+                    <p><strong>Rôle:</strong> {user?.role || "Non défini"}</p>
+                    <button className="logout-button" onClick={handleLogout}>Déconnexion</button>
+                </div>
             </div>
-       
+        </div>
     );
 }
 

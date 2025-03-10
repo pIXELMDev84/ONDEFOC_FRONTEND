@@ -1,34 +1,38 @@
 .main-content {
     flex-grow: 1;
     padding: 20px;
-    background-color: #ffffff;
-    color: #000000;
+    background-color: #f4f4f4;
+    color: #333;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
 }
+
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    background-color: #ffffff;
+    max-width: 800px;
+    background-color: #fff;
     padding: 15px 20px;
     border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
 .header h1 {
     font-size: 1.5em;
     margin: 0;
-    color: #000000;
+    color: #333;
 }
 
 .logout-button {
-    background-color: #ff007f;
+    background-color: #82354b;
     color: #fff;
-    padding: 8px 15px;
+    padding: 10px 15px;
     border: none;
     cursor: pointer;
     border-radius: 5px;
@@ -37,5 +41,32 @@
 }
 
 .logout-button:hover {
-    background-color: #ff3399;
+    background-color: #964b60;
+}
+
+/* Carte de Profil */
+.profile-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+.profile-icon {
+    font-size: 80px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.profile-card h2 {
+    margin: 0;
+    color: #222;
+}
+
+.profile-card p {
+    margin: 5px 0;
+    color: #555;
 }

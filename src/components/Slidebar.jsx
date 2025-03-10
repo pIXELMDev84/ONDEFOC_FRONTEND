@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FiMenu, FiHome, FiSettings, FiUser, FiUsers, FiLogOut, FiFileText, FiClipboard, FiCheckSquare, FiArchive, FiInbox } from "react-icons/fi"; // Import FiArchive for stock status
+import { FiMenu, FiUser, FiSettings, FiUsers, FiLogOut, FiFileText, FiClipboard, FiCheckSquare, FiArchive, FiInbox } from "react-icons/fi";
+import { FaRegUserCircle } from "react-icons/fa"; // Nouvelle icône avec cercle autour
 import "../css/Sidebar.css";
 import logo from "../images/LOGO-ONDEFOC_BLAN.png";
 
@@ -38,12 +39,11 @@ function Sidebar() {
                 </div>
             )}
             <nav>
-                {/* Dashboard Link */}
+                
                 <Link to="/dashboard" className={location.pathname === "/dashboard" ? "active" : ""}>
-                    <FiHome />
-                    {isOpen && <span> Dashboard</span>}
+                    <FaRegUserCircle />
+                    {isOpen && <span> Mon Compte </span>}
                 </Link>
-
 
                 {userRole === "chefservice" && (
                     <>
@@ -60,13 +60,12 @@ function Sidebar() {
                             {isOpen && <span>Bons de réception</span>}
                         </Link>
                         <Link to="/EtatDeStock" className={location.pathname === "/EtatDeStock" ? "active" : ""}>
-          <FiArchive />
-          {isOpen && <span>État du Stock</span>}
-        </Link>
+                            <FiArchive />
+                            {isOpen && <span>État du Stock</span>}
+                        </Link>
                     </>
                 )}
 
-                {/* Settings Link - Admin */}
                 {userRole === "admin" && (
                     <Link to="/settings" className={location.pathname === "/settings" ? "active" : ""}>
                         <FiSettings />
@@ -74,7 +73,6 @@ function Sidebar() {
                     </Link>
                 )}
 
-                {/* Settings Link - User (Restricted to their own settings) */}
                 {userRole === "user" && (
                     <Link to="/usersettings" className={location.pathname === "/usersettings" ? "active" : ""}>
                         <FiSettings />
@@ -82,7 +80,6 @@ function Sidebar() {
                     </Link>
                 )}
 
-                {/* Admin-Only Links - Users and Clients */}
                 {userRole === "admin" && (
                     <>
                         <Link to="/users" className={location.pathname === "/users" ? "active" : ""}>
@@ -98,14 +95,12 @@ function Sidebar() {
                             {isOpen && <span>Bons de réception</span>}
                         </Link>
                         <Link to="/EtatDeStock" className={location.pathname === "/EtatDeStock" ? "active" : ""}>
-          <FiArchive />
-          {isOpen && <span>État du Stock</span>}
-          </Link>
+                            <FiArchive />
+                            {isOpen && <span>État du Stock</span>}
+                        </Link>
                     </>
                 )}
                 
-
-                {/* Links for Magasinier */}
                 {userRole === "magasinier" && (
                     <>
                         <Link to="/magsettings" className={location.pathname === "/magsettings" ? "active" : ""}>
@@ -121,14 +116,13 @@ function Sidebar() {
                             {isOpen && <span>Bons de réception</span>}
                         </Link>
                         <Link to="/EtatDeStock" className={location.pathname === "/EtatDeStock" ? "active" : ""}>
-          <FiArchive />
-          {isOpen && <span>État du Stock</span>}
-        </Link>
+                            <FiArchive />
+                            {isOpen && <span>État du Stock</span>}
+                        </Link>
                     </>
                 )}
             </nav>
 
-            {/* Logout link positioned at the bottom */}
             <div className="logout" onClick={handleLogout}>
                 <FiLogOut />
                 {isOpen && <span>Déconnexion</span>}

@@ -1,35 +1,46 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/LoginPage.css";
 import logo from "../images/LOGO-ONDEFOC.png";
 
-function LoginPage() {
+const LoginPage = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [rememberMe, setRememberMe] = useState(false);
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const canvasRef = useRef(null);
 
     useEffect(() => {
         const user = localStorage.getItem("user");
         if (user) {
             navigate("/dashboard");
         }
+        drawParticles();
+
+        const resizeCanvas = () => {
+            const canvas = canvasRef.current;
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        };
+
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+
+        return () => window.removeEventListener("resize", resizeCanvas);
     }, [navigate]);
 
     const handleLogin = async (e) => {
         e.preventDefault();
-
+        setLoading(true);
         try {
             const response = await fetch("http://localhost:8000/api/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, password }),
             });
-
             const data = await response.json();
-            console.log("Réponse:", data);
-
             if (response.ok) {
                 if (rememberMe) {
                     localStorage.setItem("user", JSON.stringify(data.user));
@@ -38,27 +49,74 @@ function LoginPage() {
                     sessionStorage.setItem("user", JSON.stringify(data.user));
                     sessionStorage.setItem("token", data.token);
                 }
-
-                if (data.user.role === "admin") {
-                    navigate("/dashboard");
-                } else if (data.user.role === "chefservice") {
-                    navigate("/dashboardUser");
-                } else if (data.user.role === "magasinier") {
-                    navigate("/dashboardMagasinier");
-                } else {
-                    setError("Rôle non reconnu.");
-                }
+                navigate("/dashboard");
             } else {
                 setError(data.message || "Nom d'utilisateur ou mot de passe incorrect");
             }
         } catch (error) {
-            console.error("Erreur lors de la connexion:", error);
             setError("Une erreur s'est produite. Veuillez réessayer plus tard.");
         }
+        setLoading(false);
+    };
+
+    const drawParticles = () => {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let particlesArray = [];
+
+        ctx.fillStyle = "#82354b";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 3 - 1.5;
+                this.speedY = Math.random() * 3 - 1.5;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.size > 0.2) this.size -= 0.02;
+            }
+            draw() {
+                ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.fill();
+            }
+        }
+
+        function createParticles() {
+            for (let i = 0; i < 100; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+        createParticles();
+
+        function animateParticles() {
+            ctx.fillStyle = "#82354b";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            particlesArray.forEach((particle, index) => {
+                particle.update();
+                particle.draw();
+                if (particle.size <= 0.2) {
+                    particlesArray.splice(index, 1);
+                    particlesArray.push(new Particle());
+                }
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
     };
 
     return (
         <div className="login-container">
+            <canvas ref={canvasRef} className="background-canvas"></canvas>
             <div className="login-box">
                 <img src={logo} alt="Logo" className="login-logo" />
                 <form onSubmit={handleLogin}>
@@ -68,6 +126,7 @@ function LoginPage() {
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
+                        disabled={loading}
                     />
                     <input
                         type="password"
@@ -75,6 +134,7 @@ function LoginPage() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
+                        disabled={loading}
                     />
                     <div className="remember-me">
                         <input
@@ -82,18 +142,25 @@ function LoginPage() {
                             id="rememberMe"
                             checked={rememberMe}
                             onChange={(e) => setRememberMe(e.target.checked)}
+                            disabled={loading}
                         />
-                        <label htmlFor="rememberMe">Rester connecté</label>
+                        <label htmlFor="rememberMe">
+                            <span className="custom-checkbox"></span>
+                            Rester connecté
+                        </label>
                     </div>
-                    <button className="loginbtn" type="submit">Se connecter</button>
+
+                    <button className="loginbtn" type="submit" disabled={loading}>
+                        {loading ? <div className="loader"></div> : "Se connecter"}
+                    </button>
                     {error && <p className="error-message">{error}</p>}
-                    <p>
-                        <a href="/forgot-password">Mot de passe oublié ?</a>
-                    </p>
+                    <a href="/forgot-password" className="forgot-password">
+                        Mot de passe oublié ?
+                    </a>
                 </form>
             </div>
         </div>
     );
-}
+};
 
 export default LoginPage;
