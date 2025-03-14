@@ -17,7 +17,7 @@ import BonDeReception from './components/BonDeReception';
 import ListeDesBonsDeReception from './components/ListeDesBonsDeReception';
 import EtatDeStock from './components/EtatDeStock';
 import ChefSettings from './components/ChefSettings';
-
+import CatProduit from './components/CatProduit';
 
 function App() {
     return (
@@ -43,8 +43,7 @@ function App() {
                 <Route path="/BonDeReseption/creation" element={<BonDeReception/>} />
                 <Route path="/ListeDesBonsDeReception" element={<ListeDesBonsDeReception/>} />
                 <Route path="/EtatDeStock" element={<EtatDeStock />} />
-
-
+                <Route path="/CatProduit" element={<CatProduit />} />
             </Routes>
         </Router>
     );

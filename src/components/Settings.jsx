@@ -16,7 +16,7 @@ function Settings() {
             <Sidebar /> {/* Sidebar */}
             <div className="main-content"> {/* Contenu principal */}
                 <div className="settings-container">
-                    <h1>Paramètres Utilisateur</h1>
+                    <h1>Paramètres Gestion</h1>
                     <div className="cards-vertical">
 
                         <div className="card" onClick={() => navigateTo("/settings/addUser")}>

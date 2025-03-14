@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FiMenu, FiUser, FiSettings, FiUsers, FiLogOut, FiFileText, FiClipboard, FiCheckSquare, FiArchive, FiInbox } from "react-icons/fi";
-import { FaRegUserCircle } from "react-icons/fa"; // Nouvelle icône avec cercle autour
+import { FiMenu, FiUser, FiSettings,FiUsers, FiLogOut, FiFileText, FiClipboard, FiDatabase ,FiCheckSquare, FiArchive, FiInbox } from "react-icons/fi";
+import { FaRegUserCircle} from "react-icons/fa"; 
+import { HiUsers } from "react-icons/hi";
+import { GiShoppingCart, GiFruitBowl, GiMeat, GiWheat } from "react-icons/gi";
+
 import "../css/Sidebar.css";
 import logo from "../images/LOGO-ONDEFOC_BLAN.png";
 
@@ -49,7 +52,11 @@ function Sidebar() {
                     <>
                         <Link to="/chefsettings" className={location.pathname === "/chefsettings" ? "active" : ""}>
                             <FiSettings />
-                            {isOpen && <span> Paramètres </span>}
+                            {isOpen && <span>Paramètres</span>}
+                        </Link>
+                        <Link to="/fournissseurlist" className={location.pathname === "/fournissseurlist" ? "active" : ""}>
+                            <FiUsers />
+                            {isOpen && <span>Fournisseur</span>}
                         </Link>
                         <Link to="/ListeDesBonsDeCommande" className={location.pathname === "/ListeDesBonsDeCommande" ? "active" : ""}>
                             <FiFileText />
@@ -62,6 +69,10 @@ function Sidebar() {
                         <Link to="/EtatDeStock" className={location.pathname === "/EtatDeStock" ? "active" : ""}>
                             <FiArchive />
                             {isOpen && <span>État du Stock</span>}
+                        </Link>
+                        <Link to="/CatProduit" className={location.pathname === "/CatProduit" ? "active" : ""}>
+                            <GiFruitBowl />
+                            {isOpen && <span>Produits</span>}
                         </Link>
                     </>
                 )}
@@ -86,17 +97,25 @@ function Sidebar() {
                             <FiUser />
                             {isOpen && <span> Utilisateurs</span>}
                         </Link>
+                        <Link to="/fournissseurlist" className={location.pathname === "/fournissseurlist" ? "active" : ""}>
+                            <FiUsers />
+                            {isOpen && <span>Fournisseurs</span>}
+                        </Link>
+                        <Link to="/CatProduit" className={location.pathname === "/CatProduit" ? "active" : ""}>
+                            <GiFruitBowl />
+                            {isOpen && <span>Produits</span>}
+                        </Link>
                         <Link to="/ListeDesBonsDeCommande" className={location.pathname === "/ListeDesBonsDeCommande" ? "active" : ""}>
                             <FiFileText />
-                            {isOpen && <span>Bon de commande</span>}
+                            {isOpen && <span>Bon de commandes</span>}
                         </Link>
                         <Link to="/ListeDesBonsDeReception" className={location.pathname === "/ListeDesBonsDeReception" ? "active" : ""}>
                             <FiCheckSquare />
-                            {isOpen && <span>Bons de réception</span>}
+                            {isOpen && <span>Bons de réceptions</span>}
                         </Link>
                         <Link to="/EtatDeStock" className={location.pathname === "/EtatDeStock" ? "active" : ""}>
                             <FiArchive />
-                            {isOpen && <span>État du Stock</span>}
+                            {isOpen && <span>État des Stocks</span>}
                         </Link>
                     </>
                 )}
@@ -114,6 +133,10 @@ function Sidebar() {
                         <Link to="/ListeDesBonsDeReception" className={location.pathname === "/ListeDesBonsDeReception" ? "active" : ""}>
                             <FiCheckSquare />
                             {isOpen && <span>Bons de réception</span>}
+                        </Link>
+                        <Link to="/CatProduit" className={location.pathname === "/CatProduit" ? "active" : ""}>
+                            <GiFruitBowl />
+                            {isOpen && <span>Produits</span>}
                         </Link>
                         <Link to="/EtatDeStock" className={location.pathname === "/EtatDeStock" ? "active" : ""}>
                             <FiArchive />

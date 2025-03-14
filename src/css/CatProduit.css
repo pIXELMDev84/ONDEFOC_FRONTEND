@@ -1,0 +1,94 @@
+.dashboard {
+    display: flex;
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .category-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .category-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    width: 180px;
+    text-align: center;
+  }
+  
+  .category-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .icon {
+    font-size: 40px;
+    color: #82354b;
+  }
+  
+  .modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 500px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .close-btn {
+    background: red;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  
+  .product-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .product-table th {
+    background-color: #772D40; /* Couleur bordeaux comme l'image */
+    color: white;
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .product-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    background: white;
+    color: black; /* Texte noir */
+  }
+  
+  .product-table tbody tr:hover {
+    background-color: #f4f4f4; /* Effet survol */
+  }
+  
+  .loading {
+    color: blue;
+  }
+  
+  .error {
+    color: red;
+  }
+  

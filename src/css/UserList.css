@@ -157,3 +157,36 @@ h1 {
 .delete-button {
     color: #d33;
 }
+.custom-input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #fff;
+    color: #333;
+}
+
+.custom-input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Ajout d'un style pour le popup */
+.popup {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    width: 350px;
+    position: relative;
+}
+
+/* Icône d'avertissement */
+.popup-icon {
+    color: #f39c12;
+    font-size: 50px;
+    margin-bottom: 10px;
+}
