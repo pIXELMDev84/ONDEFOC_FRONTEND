@@ -6,9 +6,9 @@ import "../css/CatProduit.css"; // Fichier CSS
 
 const categories = [
   { id: 1, nom: "Alimentation Générale", icon: <GiShoppingCart /> },
-  { id: 2, nom: "Fruits et Légumes", icon: <GiFruitBowl /> },
-  { id: 3, nom: "Viande + Poisson + Œuf", icon: <GiMeat /> },
-  { id: 4, nom: "Pain et Pâtisserie", icon: <GiWheat /> },
+  { id: 4, nom: "Fruits et Légumes", icon: <GiFruitBowl /> },
+  { id: 2, nom: "Viande + Poisson + Œuf", icon: <GiMeat /> },
+  { id: 3, nom: "Pain et Pâtisserie", icon: <GiWheat /> },
 ];
 
 export default function Categories() {
