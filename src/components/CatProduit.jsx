@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GiShoppingCart, GiFruitBowl, GiMeat, GiWheat } from "react-icons/gi";
 import Modal from "react-modal";
 import Sidebar from "./Slidebar.jsx"; // Importation de la slidebar
@@ -17,13 +17,34 @@ export default function Categories() {
   const [categorieNom, setCategorieNom] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [compteurs, setCompteurs] = useState({}); // Stocke le nombre de produits par catégorie
+
+  // Récupérer le nombre de produits par catégorie
+  useEffect(() => {
+    const fetchCounts = async () => {
+      const newCompteurs = {};
+      for (const categorie of categories) {
+        try {
+          const response = await fetch(`http://localhost:8000/api/produits/categorie/${categorie.id}/count`);
+          const data = await response.json();
+          newCompteurs[categorie.id] = data.count || 0; // Mettre 0 si aucun produit
+        } catch (error) {
+          console.error("Erreur lors de la récupération du compteur :", error);
+          newCompteurs[categorie.id] = 0;
+        }
+      }
+      setCompteurs(newCompteurs);
+    };
+
+    fetchCounts();
+  }, []);
 
   // Récupérer les produits d'une catégorie
   const openModal = async (categorieId, nom) => {
     setCategorieNom(nom);
     setLoading(true);
     setError("");
-    
+
     try {
       const response = await fetch(`http://localhost:8000/api/produits/categorie/${categorieId}`);
       const data = await response.json();
@@ -49,10 +70,11 @@ export default function Categories() {
       <Sidebar /> {/* Sidebar incluse */}
       <div className="main-content">
         <h1>Liste des Produits</h1>
-        <h3>cliquer sur une des categories pour afficher la liste des produits</h3>
+        <h3>Cliquer sur une des catégories pour afficher la liste des produits</h3>
         <div className="category-container">
           {categories.map((categorie) => (
             <div key={categorie.id} className="category-card" onClick={() => openModal(categorie.id, categorie.nom)}>
+              <p className="counter">{compteurs[categorie.id] || 0} Produits</p>
               <div className="icon">{categorie.icon}</div>
               <p>{categorie.nom}</p>
             </div>
@@ -62,7 +84,7 @@ export default function Categories() {
         {/* MODAL POUR AFFICHER LES PRODUITS */}
         <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)} className="modal">
           <h2>{categorieNom}</h2>
-{loading ? (
+          {loading ? (
             <p className="loading">Chargement...</p>
           ) : error ? (
             <p className="error">{error}</p>
