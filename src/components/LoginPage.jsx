@@ -11,6 +11,8 @@ const LoginPage = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const canvasRef = useRef(null);
+    const [success, setSuccess] = useState("");
+
 
     useEffect(() => {
         const user = localStorage.getItem("user");
@@ -34,30 +36,49 @@ const LoginPage = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         setLoading(true);
+        setError(""); 
+        setSuccess("");
+    
         try {
             const response = await fetch("http://localhost:8000/api/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, password }),
             });
+    
             const data = await response.json();
+            console.log("Réponse API:", data); // 🔍 Voir le message exact retourné
+    
             if (response.ok) {
-                if (rememberMe) {
-                    localStorage.setItem("user", JSON.stringify(data.user));
-                    localStorage.setItem("token", data.token);
-                } else {
-                    sessionStorage.setItem("user", JSON.stringify(data.user));
-                    sessionStorage.setItem("token", data.token);
-                }
-                navigate("/dashboard");
+                setSuccess("✅ Connexion réussie !");
+                setTimeout(() => {
+                    if (rememberMe) {
+                        localStorage.setItem("user", JSON.stringify(data.user));
+                        localStorage.setItem("token", data.token);
+                    } else {
+                        sessionStorage.setItem("user", JSON.stringify(data.user));
+                        sessionStorage.setItem("token", data.token);
+                    }
+                    navigate("/dashboard");
+                }, 1500);
             } else {
-                setError(data.message || "Nom d'utilisateur ou mot de passe incorrect");
+                // Vérifie si l'API retourne "Invalid credentials"
+                if (data.message === "Invalid credentials") {
+                    setError("❌ Nom d'utilisateur ou mot de passe incorrect !");
+                } else {
+                    setError(data.message || "❌ Une erreur est survenue !");
+                }
             }
-        } catch (error) {
-            setError("Une erreur s'est produite. Veuillez réessayer plus tard.");
+        } catch (err) {
+            console.error("Erreur de connexion:", err);
+            setError("❌ Impossible de contacter le serveur !");
         }
+        
         setLoading(false);
     };
+    
+    
+    
 
     const drawParticles = () => {
         const canvas = canvasRef.current;
@@ -153,7 +174,10 @@ const LoginPage = () => {
                     <button className="loginbtn" type="submit" disabled={loading}>
                         {loading ? <div className="loader"></div> : "Se connecter"}
                     </button>
-                    {error && <p className="error-message">{error}</p>}
+                    {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
+{success && <p style={{ color: "green", marginTop: "10px" }}>{success}</p>}
+{loading && <p style={{ color: "blue", marginTop: "10px" }}>Connexion en cours...</p>}
+
                     <a href="/forgot-password" className="forgot-password">
                         Mot de passe oublié ?
                     </a>
