@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { FiTrash2, FiDownload, FiSearch } from "react-icons/fi";
+import { FiTrash2, FiDownload } from "react-icons/fi";
 import Sidebar from "./Slidebar.jsx";
-import "../css/ListeDesBonsDeReception.css";
+import "../css/ListeDesBonJournalier.css";
 
-const ListeDesBonsDeReception = () => {
-  const [bonsDeReception, setBonsDeReception] = useState([]);
-  const [filteredBons, setFilteredBons] = useState([]);
+const ListeDesBonJournalier = () => {
+  const [bonsJournaliers, setBonsJournaliers] = useState([]);
   const [message, setMessage] = useState("");
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const [selectedBonId, setSelectedBonId] = useState(null);
@@ -21,17 +20,16 @@ const ListeDesBonsDeReception = () => {
       setUserRole(parsedUser.role);
     }
 
-    const fetchBonsDeReception = async () => {
+    const fetchBonsJournaliers = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/abdrs");
-        setBonsDeReception(response.data);
-        setFilteredBons(response.data);
+        const response = await axios.get("http://localhost:8000/api/bons-journaliers");
+        setBonsJournaliers(response.data);
       } catch (error) {
-        console.error("Erreur lors de la récupération des bons de réception", error);
-        setMessage("Erreur lors de la récupération des bons de réception");
+        console.error("Erreur lors de la récupération des bons journaliers", error);
+        setMessage("Erreur lors de la récupération des bons journaliers");
       }
     };
-    fetchBonsDeReception();
+    fetchBonsJournaliers();
   }, []);
 
   const openConfirmationPopup = (id) => {
@@ -41,21 +39,25 @@ const ListeDesBonsDeReception = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/supr/bdrs/${id}`);
-      setBonsDeReception((prev) => prev.filter((bon) => bon.id !== id));
-      setMessage({ text: "Bon de réception supprimé avec succès.", type: "success" });
+      await axios.delete(`http://localhost:8000/api/bons-journaliers/${id}`);
+      setBonsJournaliers((prev) => prev.filter((bon) => bon.id !== id));
+      setMessage({ text: "Bon journalier supprimé avec succès.", type: "success" });
     } catch (error) {
-      console.error("Erreur lors de la suppression du bon de réception", error);
+      console.error("Erreur lors de la suppression du bon journalier", error);
       setMessage({ text: "Une erreur est survenue lors de la suppression.", type: "error" });
     }
     setShowConfirmPopup(false);
+  };
+
+  const handleDownload = async (id) => {
+    window.open(`http://localhost:8000/api/bons-journaliers/${id}`, "_blank");
   };
 
   return (
     <div className="dashboard">
       <Sidebar />
       <div className="list-container">
-        <h2>Liste des bons de réception</h2>
+        <h2>Liste des bons journaliers</h2>
 
         {message && (
           <div className={`notification ${message.type}`}>
@@ -67,19 +69,15 @@ const ListeDesBonsDeReception = () => {
           <thead>
             <tr>
               <th>Code</th>
-              <th>Fournisseur</th>
-              <th>Téléphone</th>
               <th>Date de création</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {filteredBons.length > 0 ? (
-              filteredBons.map((bon) => (
+            {bonsJournaliers.length > 0 ? (
+              bonsJournaliers.map((bon) => (
                 <tr key={bon.id}>
                   <td>{bon.code}</td>
-                  <td>{bon.fournisseur.nom}</td>
-                  <td>{bon.fournisseur.num_telephone}</td>
                   <td>{new Date(bon.created_at).toLocaleDateString()}</td>
                   <td className="actions">
                     {userRole === "admin" && (
@@ -101,7 +99,7 @@ const ListeDesBonsDeReception = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="5">Aucun bon de réception trouvé</td>
+                <td colSpan="3">Aucun bon journalier trouvé</td>
               </tr>
             )}
           </tbody>
@@ -112,7 +110,7 @@ const ListeDesBonsDeReception = () => {
         <div className="popup-overlay">
           <div className="popup">
             <h3>Confirmation</h3>
-            <p>Êtes-vous sûr de vouloir supprimer ce bon de réception ?</p>
+            <p>Êtes-vous sûr de vouloir supprimer ce bon journalier ?</p>
             <div className="popup-actions">
               <button
                 className="confirm-button"
@@ -131,4 +129,4 @@ const ListeDesBonsDeReception = () => {
   );
 };
 
-export default ListeDesBonsDeReception;
+export default ListeDesBonJournalier;

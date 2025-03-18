@@ -30,7 +30,10 @@ function MagasinierSettings() {
                             <h2>ajouter un produit</h2>
                             <p>ajouter un produit système.</p>
                         </div>
-
+                        <div className="card" onClick={() => navigateTo("/BonJournalierForm")}>
+                            <h2>etablir les etat de sortie</h2>
+                            <p>retirer une quantité consomé du stock</p>
+                        </div>
                     </div>
                 </div>
             </div>

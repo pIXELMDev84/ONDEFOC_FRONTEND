@@ -18,7 +18,9 @@ import ListeDesBonsDeReception from './components/ListeDesBonsDeReception';
 import EtatDeStock from './components/EtatDeStock';
 import ChefSettings from './components/ChefSettings';
 import CatProduit from './components/CatProduit';
-import StockGlobal from'./components/StockGlobal';
+import BonJournalierForm from './components/BonJournalierForm';
+import ListeDesBonJournalier from './components/ListeDesBonJournalier';
+
 
 function App() {
     return (
@@ -45,7 +47,11 @@ function App() {
                 <Route path="/ListeDesBonsDeReception" element={<ListeDesBonsDeReception/>} />
                 <Route path="/EtatDeStock" element={<EtatDeStock />} />
                 <Route path="/CatProduit" element={<CatProduit />} />
-                <Route path="/StockGlobal" element={<StockGlobal />} />
+                <Route path="/BonJournalierForm" element={<BonJournalierForm />} />
+                <Route path="/ListeDesBonJournalier" element={<ListeDesBonJournalier />} />
+
+                
+
             </Routes>
         </Router>
     );

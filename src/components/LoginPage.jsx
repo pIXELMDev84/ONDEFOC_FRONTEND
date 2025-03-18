@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/LoginPage.css";
 import logo from "../images/LOGO-ONDEFOC.png";
+import { FaInstagram } from "react-icons/fa";
 
 const LoginPage = () => {
     const [username, setUsername] = useState("");
@@ -12,7 +13,6 @@ const LoginPage = () => {
     const navigate = useNavigate();
     const canvasRef = useRef(null);
     const [success, setSuccess] = useState("");
-
 
     useEffect(() => {
         const user = localStorage.getItem("user");
@@ -36,19 +36,17 @@ const LoginPage = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setError(""); 
+        setError("");
         setSuccess("");
-    
+
         try {
             const response = await fetch("http://localhost:8000/api/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, password }),
             });
-    
+
             const data = await response.json();
-            console.log("Réponse API:", data); // 🔍 Voir le message exact retourné
-    
             if (response.ok) {
                 setSuccess("✅ Connexion réussie !");
                 setTimeout(() => {
@@ -62,23 +60,16 @@ const LoginPage = () => {
                     navigate("/dashboard");
                 }, 1500);
             } else {
-                // Vérifie si l'API retourne "Invalid credentials"
-                if (data.message === "Invalid credentials") {
-                    setError("❌ Nom d'utilisateur ou mot de passe incorrect !");
-                } else {
-                    setError(data.message || "❌ Une erreur est survenue !");
-                }
+                setError(data.message === "Invalid credentials" 
+                    ? "❌ Nom d'utilisateur ou mot de passe incorrect !" 
+                    : data.message || "❌ Une erreur est survenue !");
             }
         } catch (err) {
-            console.error("Erreur de connexion:", err);
             setError("❌ Impossible de contacter le serveur !");
         }
-        
+
         setLoading(false);
     };
-    
-    
-    
 
     const drawParticles = () => {
         const canvas = canvasRef.current;
@@ -175,16 +166,31 @@ const LoginPage = () => {
                         {loading ? <div className="loader"></div> : "Se connecter"}
                     </button>
                     {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
-{success && <p style={{ color: "green", marginTop: "10px" }}>{success}</p>}
-{loading && <p style={{ color: "blue", marginTop: "10px" }}>Connexion en cours...</p>}
+                    {success && <p style={{ color: "green", marginTop: "10px" }}>{success}</p>}
+                    {loading && <p style={{ color: "blue", marginTop: "10px" }}>Connexion en cours...</p>}
 
                     <a href="/forgot-password" className="forgot-password">
                         Mot de passe oublié ?
                     </a>
                 </form>
             </div>
-        </div>
-    );
+            <div className="footer-info">
+    <div className="copyright">
+        © {new Date().getFullYear()} ONDEFOC
+    </div>
+    <div className="developer-credit">
+        Développé par{" "}
+        <a href="https://www.instagram.com/aminesidiboumedine?igsh=dnQ0a29lMTR4YjRi&utm_source=qr" target="_blank" rel="noopener noreferrer">
+            Sidiboumedine AbdelHak Amine
+        </a>{" "}
+        &{" "}
+        <a href="https://www.instagram.com/sidali_brb?igsh=MTJrNXdxd3RiNTU1Yg==" target="_blank" rel="noopener noreferrer">
+            Bourbala_Sidali
+        </a>
+    </div>
+</div>
+    </div>
+  );
 };
 
 export default LoginPage;

@@ -183,3 +183,34 @@ input {
     border-radius: 4px;
     border: 1px solid red;
 }
+.developer-credit {
+    position: fixed;
+    bottom: 10px;
+    right: 15px;
+    font-size: 14px;
+    color: white;
+}
+
+.developer-credit a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.developer-credit a:hover {
+    text-decoration: underline;
+}
+.footer-info {
+    position: fixed;
+    bottom: 10px;
+    left: 15px;
+    right: 15px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: white;
+}
+
+.copyright {
+    font-weight: bold;
+}

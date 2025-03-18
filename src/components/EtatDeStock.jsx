@@ -9,11 +9,19 @@ const EtatDeStock = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
 
-  useEffect(() => {
+  const fetchStockData = () => {
     fetch("http://localhost:8000/api/stock-global") // Change l'URL si besoin
       .then((response) => response.json())
       .then((data) => setStockData(data.categories))
       .catch((error) => console.error("Erreur de chargement:", error));
+  };
+
+  useEffect(() => {
+    fetchStockData(); // Charger les données initiales
+
+    const interval = setInterval(fetchStockData, 5000); // Rafraîchir toutes les 5 secondes
+
+    return () => clearInterval(interval); // Nettoyage à la suppression du composant
   }, []);
 
   const getCategoryIcon = (categoryName) => {
@@ -87,7 +95,7 @@ const EtatDeStock = () => {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan="3">Aucun produit disponible</td>
+                      <td colSpan="2">Aucun produit disponible</td>
                     </tr>
                   )}
                 </tbody>

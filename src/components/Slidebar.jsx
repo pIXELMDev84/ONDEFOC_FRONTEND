@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FiMenu, FiUser, FiSettings,FiUsers, FiLogOut, FiFileText, FiClipboard, FiDatabase ,FiCheckSquare, FiArchive, FiInbox } from "react-icons/fi";
 import { FaRegUserCircle} from "react-icons/fa"; 
 import { HiUsers } from "react-icons/hi";
+import { PiArrowCounterClockwiseFill } from "react-icons/pi";
 import { GiShoppingCart, GiFruitBowl, GiMeat, GiWheat } from "react-icons/gi";
 
 import "../css/Sidebar.css";
@@ -66,14 +67,19 @@ function Sidebar() {
                             <FiCheckSquare />
                             {isOpen && <span>Bons de réception</span>}
                         </Link>
-                        <Link to="/EtatDeStock" className={location.pathname === "/EtatDeStock" ? "active" : ""}>
-                            <FiArchive />
-                            {isOpen && <span>État du Stock</span>}
+                        <Link to="/ListeDesBonJournalier" className={location.pathname === "/ListeDesBonJournalier" ? "active" : ""}>
+                        <PiArrowCounterClockwiseFill />
+                            {isOpen && <span>Bon Journalier</span>}
                         </Link>
                         <Link to="/CatProduit" className={location.pathname === "/CatProduit" ? "active" : ""}>
                             <GiFruitBowl />
                             {isOpen && <span>Produits</span>}
                         </Link>
+                        <Link to="/EtatDeStock" className={location.pathname === "/EtatDeStock" ? "active" : ""}>
+                            <FiArchive />
+                            {isOpen && <span>État du Stock</span>}
+                        </Link>
+                 
                     </>
                 )}
 
@@ -101,10 +107,7 @@ function Sidebar() {
                             <FiUsers />
                             {isOpen && <span>Fournisseurs</span>}
                         </Link>
-                        <Link to="/CatProduit" className={location.pathname === "/CatProduit" ? "active" : ""}>
-                            <GiFruitBowl />
-                            {isOpen && <span>Produits</span>}
-                        </Link>
+
                         <Link to="/ListeDesBonsDeCommande" className={location.pathname === "/ListeDesBonsDeCommande" ? "active" : ""}>
                             <FiFileText />
                             {isOpen && <span>Bon de commandes</span>}
@@ -112,6 +115,14 @@ function Sidebar() {
                         <Link to="/ListeDesBonsDeReception" className={location.pathname === "/ListeDesBonsDeReception" ? "active" : ""}>
                             <FiCheckSquare />
                             {isOpen && <span>Bons de réceptions</span>}
+                        </Link>
+                        <Link to="/ListeDesBonJournalier" className={location.pathname === "/ListeDesBonJournalier" ? "active" : ""}>
+                        <PiArrowCounterClockwiseFill />
+                            {isOpen && <span>Bon Journalier</span>}
+                        </Link>
+                        <Link to="/CatProduit" className={location.pathname === "/CatProduit" ? "active" : ""}>
+                            <GiFruitBowl />
+                            {isOpen && <span>Produits</span>}
                         </Link>
                         <Link to="/EtatDeStock" className={location.pathname === "/EtatDeStock" ? "active" : ""}>
                             <FiArchive />
@@ -133,6 +144,10 @@ function Sidebar() {
                         <Link to="/ListeDesBonsDeReception" className={location.pathname === "/ListeDesBonsDeReception" ? "active" : ""}>
                             <FiCheckSquare />
                             {isOpen && <span>Bons de réception</span>}
+                        </Link>
+                        <Link to="/ListeDesBonJournalier" className={location.pathname === "/ListeDesBonJournalier" ? "active" : ""}>
+                        <PiArrowCounterClockwiseFill />
+                            {isOpen && <span>Bon Journalier</span>}
                         </Link>
                         <Link to="/CatProduit" className={location.pathname === "/CatProduit" ? "active" : ""}>
                             <GiFruitBowl />
