@@ -5,6 +5,8 @@ import { FaRegUserCircle} from "react-icons/fa";
 import { HiUsers } from "react-icons/hi";
 import { PiArrowCounterClockwiseFill } from "react-icons/pi";
 import { GiShoppingCart, GiFruitBowl, GiMeat, GiWheat } from "react-icons/gi";
+import { FaCartArrowDown } from "react-icons/fa";
+
 
 import "../css/Sidebar.css";
 import logo from "../images/LOGO-ONDEFOC_BLAN.png";
@@ -72,7 +74,7 @@ function Sidebar() {
                             {isOpen && <span>Bon Journalier</span>}
                         </Link>
                         <Link to="/CatProduit" className={location.pathname === "/CatProduit" ? "active" : ""}>
-                            <GiFruitBowl />
+                        <FaCartArrowDown />
                             {isOpen && <span>Produits</span>}
                         </Link>
                         <Link to="/EtatDeStock" className={location.pathname === "/EtatDeStock" ? "active" : ""}>
@@ -121,7 +123,7 @@ function Sidebar() {
                             {isOpen && <span>Bon Journalier</span>}
                         </Link>
                         <Link to="/CatProduit" className={location.pathname === "/CatProduit" ? "active" : ""}>
-                            <GiFruitBowl />
+                        <FaCartArrowDown />
                             {isOpen && <span>Produits</span>}
                         </Link>
                         <Link to="/EtatDeStock" className={location.pathname === "/EtatDeStock" ? "active" : ""}>
@@ -150,7 +152,7 @@ function Sidebar() {
                             {isOpen && <span>Bon Journalier</span>}
                         </Link>
                         <Link to="/CatProduit" className={location.pathname === "/CatProduit" ? "active" : ""}>
-                            <GiFruitBowl />
+                        <FaCartArrowDown />
                             {isOpen && <span>Produits</span>}
                         </Link>
                         <Link to="/EtatDeStock" className={location.pathname === "/EtatDeStock" ? "active" : ""}>
