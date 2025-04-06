@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { FiTrash2, FiDownload, FiSearch } from "react-icons/fi";
+import { FiTrash2, FiDownload } from "react-icons/fi";
 import Sidebar from "./Slidebar.jsx";
 import "../css/ListeDesBonsDeReception.css";
 
@@ -34,11 +34,13 @@ const ListeDesBonsDeReception = () => {
     fetchBonsDeReception();
   }, []);
 
+  // Fonction pour ouvrir le popup de confirmation de suppression
   const openConfirmationPopup = (id) => {
     setSelectedBonId(id);
     setShowConfirmPopup(true);
   };
 
+  // Fonction pour supprimer un bon de réception
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://localhost:8000/api/supr/bdrs/${id}`);
@@ -49,6 +51,27 @@ const ListeDesBonsDeReception = () => {
       setMessage({ text: "Une erreur est survenue lors de la suppression.", type: "error" });
     }
     setShowConfirmPopup(false);
+  };
+
+  // Fonction pour télécharger le PDF d'un bon de réception
+  const handleDownload = async (id) => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/bdrs/${id}/pdf`, {
+        responseType: "blob", // Important pour récupérer un fichier
+      });
+
+      // Création d'un lien de téléchargement
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `bon_reception_${id}.pdf`); // Nom du fichier
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error("Erreur lors du téléchargement du bon de réception", error);
+      setMessage({ text: "Erreur lors du téléchargement.", type: "error" });
+    }
   };
 
   return (

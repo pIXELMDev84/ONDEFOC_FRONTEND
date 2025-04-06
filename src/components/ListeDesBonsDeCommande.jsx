@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { FiTrash2, FiDownload, FiSearch } from "react-icons/fi";
+import { FiTrash2, FiDownload } from "react-icons/fi";
 import Sidebar from "./Slidebar.jsx";
-import whatsappIcon from "../images/Whatsapp.png";
-import gmailIcon from "../images/Gmail.png";
 import "../css/ListeDesBonsDeCommande.css";
 
 const ListeDesBonsDeCommande = () => {
   const [bonsDeCommande, setBonsDeCommande] = useState([]);
-  const [filteredBons, setFilteredBons] = useState([]);
   const [message, setMessage] = useState("");
   const [showConfirmPopup, setShowConfirmPopup] = useState(false);
   const [selectedBonId, setSelectedBonId] = useState(null);
@@ -27,7 +24,6 @@ const ListeDesBonsDeCommande = () => {
       try {
         const response = await axios.get("http://localhost:8000/api/abdcm");
         setBonsDeCommande(response.data);
-        setFilteredBons(response.data);
       } catch (error) {
         console.error("Erreur lors de la récupération des bons de commande", error);
         setMessage("Erreur lors de la récupération des bons de commande");
@@ -36,6 +32,7 @@ const ListeDesBonsDeCommande = () => {
     fetchBonsDeCommande();
   }, []);
 
+  // Suppression d'un bon de commande
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://localhost:8000/api/supr/bdcm/${id}`);
@@ -46,6 +43,26 @@ const ListeDesBonsDeCommande = () => {
       setMessage({ text: "Une erreur est survenue lors de la suppression.", type: "error" });
     }
     setShowConfirmPopup(false);
+  };
+
+  // Téléchargement du PDF d'un bon de commande
+  const handleDownload = async (id) => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/bdcm/${id}/pdf`, {
+        responseType: "blob",
+      });
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", `bon_commande_${id}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error("Erreur lors du téléchargement du bon de commande", error);
+      setMessage({ text: "Erreur lors du téléchargement.", type: "error" });
+    }
   };
 
   return (
@@ -59,7 +76,7 @@ const ListeDesBonsDeCommande = () => {
         <table className="bons-table">
           <thead>
             <tr>
-              <th>Code du bon</th>
+              <th>Code</th>
               <th>Fournisseur</th>
               <th>Téléphone</th>
               <th>Date</th>
@@ -67,28 +84,19 @@ const ListeDesBonsDeCommande = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredBons.length > 0 ? (
-              filteredBons.map((bon) => (
+            {bonsDeCommande.length > 0 ? (
+              bonsDeCommande.map((bon) => (
                 <tr key={bon.id}>
                   <td>{bon.code}</td>
                   <td>{bon.fournisseur.nom}</td>
                   <td>{bon.fournisseur.num_telephone}</td>
                   <td>{new Date(bon.created_at).toLocaleDateString()}</td>
                   <td className="actions">
-                    <button
-                      className="download-button"
-                      onClick={() => handleDownload(bon.id)}
-                      title="Télécharger"
-                    >
+                    <button className="download-button" onClick={() => handleDownload(bon.id)}>
                       <FiDownload size={18} color="green" />
                     </button>
-                    {/* Affichage du bouton de suppression uniquement pour les admins */}
                     {userRole === "admin" && (
-                      <button
-                        className="delete-button"
-                        onClick={() => openConfirmationPopup(bon.id)}
-                        title="Supprimer"
-                      >
+                      <button className="delete-button" onClick={() => setShowConfirmPopup(true)}>
                         <FiTrash2 size={18} color="red" />
                       </button>
                     )}
