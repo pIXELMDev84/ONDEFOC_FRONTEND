@@ -11,15 +11,6 @@ const ListeDesBonsDeCommande = () => {
   const [selectedBonId, setSelectedBonId] = useState(null);
   const [userRole, setUserRole] = useState("");
 
-  useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (!user) {
-      window.location.href = "/login";
-    } else {
-      const parsedUser = JSON.parse(user);
-      setUserRole(parsedUser.role); // Stocker le rôle de l'utilisateur
-    }
-
     const fetchBonsDeCommande = async () => {
       try {
         const response = await axios.get("http://localhost:8000/api/abdcm");
@@ -30,7 +21,6 @@ const ListeDesBonsDeCommande = () => {
       }
     };
     fetchBonsDeCommande();
-  }, []);
 
   // Suppression d'un bon de commande
   const handleDelete = async (id) => {

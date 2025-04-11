@@ -13,12 +13,25 @@ const LoginPage = () => {
     const navigate = useNavigate();
     const canvasRef = useRef(null);
     const [success, setSuccess] = useState("");
+    const [user, setUser] = useState(null); 
 
     useEffect(() => {
-        const user = localStorage.getItem("user");
-        if (user) {
-            navigate("/dashboard");
+        const storedUser = localStorage.getItem("user") || sessionStorage.getItem("user");
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        } else {
+            navigate("/login"); // Redirige si pas connecté
         }
+    }, [navigate]);
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user") || sessionStorage.getItem("user");
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        } else {
+            navigate("/login"); // Redirige si pas connecté
+        }
+    
         drawParticles();
 
         const resizeCanvas = () => {
@@ -32,44 +45,58 @@ const LoginPage = () => {
 
         return () => window.removeEventListener("resize", resizeCanvas);
     }, [navigate]);
-
     const handleLogin = async (e) => {
         e.preventDefault();
         setLoading(true);
         setError("");
         setSuccess("");
-
+    
         try {
             const response = await fetch("http://localhost:8000/api/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, password }),
             });
-
+    
             const data = await response.json();
             if (response.ok) {
                 setSuccess("✅ Connexion réussie !");
                 setTimeout(() => {
                     if (rememberMe) {
+                        // Si l'utilisateur coche "Rester connecté", on utilise localStorage
                         localStorage.setItem("user", JSON.stringify(data.user));
                         localStorage.setItem("token", data.token);
                     } else {
+                        // Sinon, on utilise sessionStorage (effacé dès que l'utilisateur ferme l'onglet)
                         sessionStorage.setItem("user", JSON.stringify(data.user));
                         sessionStorage.setItem("token", data.token);
                     }
-                    navigate("/dashboard");
+    
+                    // Redirection dynamique selon le rôle
+                    switch (data.user.role) {
+                        case "admin":
+                            navigate("/dashboard");
+                            break;
+                        case "chefservice":
+                            navigate("/dashboardchef");
+                            break;
+                        case "magasinier":
+                            navigate("/dashboardMagasinier");
+                            break;
+                        default:
+                            navigate("/login"); // Si le rôle n'est pas reconnu, rediriger vers login
+                    }
                 }, 1500);
             } else {
-                setError(data.message === "Invalid credentials" 
-                    ? "❌ Nom d'utilisateur ou mot de passe incorrect !" 
-                    : data.message || "❌ Une erreur est survenue !");
+                setError(data.message || "❌ Une erreur est survenue !");
             }
         } catch (err) {
             setError("❌ Impossible de contacter le serveur !");
         }
-
+    
         setLoading(false);
     };
+    
 
     const drawParticles = () => {
         const canvas = canvasRef.current;

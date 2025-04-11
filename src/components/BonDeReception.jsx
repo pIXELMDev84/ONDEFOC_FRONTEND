@@ -19,6 +19,8 @@ const BonDeReception = () => {
   const [loading, setLoading] = useState(false)
   const [animateForm, setAnimateForm] = useState(false)
 
+  
+
   useEffect(() => {
     setAnimateForm(true)
 

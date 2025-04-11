@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom"
 import Sidebar from "../components/Slidebar.jsx"
 import "../css/Settings.css"
 
+
+
 function Settings() {
   const navigate = useNavigate()
 

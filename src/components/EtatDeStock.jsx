@@ -4,6 +4,7 @@ import { GiChickenLeg, GiWheat, GiFruitBowl, GiOpenChest } from "react-icons/gi"
 import Sidebar from "./Slidebar"; 
 import "../css/EtatDeStock.css";
 
+
 const EtatDeStock = () => {
   const [stockData, setStockData] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -16,6 +17,7 @@ const EtatDeStock = () => {
       .catch((error) => console.error("Erreur de chargement:", error));
   };
 
+  
   useEffect(() => {
     fetchStockData(); // Charger les données initiales
 

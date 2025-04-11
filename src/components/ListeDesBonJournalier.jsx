@@ -11,16 +11,7 @@ const ListeDesBonJournalier = () => {
   const [selectedBonId, setSelectedBonId] = useState(null);
   const [userRole, setUserRole] = useState(null);
 
-  useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (!user) {
-      window.location.href = "/login";
-    } else {
-      const parsedUser = JSON.parse(user);
-      setUserRole(parsedUser.role);
-    }
-
-    const fetchBonsJournaliers = async () => {
+  const fetchBonsJournaliers = async () => {
       try {
         const response = await axios.get("http://localhost:8000/api/bons-journaliers");
         setBonsJournaliers(response.data);
@@ -30,7 +21,7 @@ const ListeDesBonJournalier = () => {
       }
     };
     fetchBonsJournaliers();
-  }, []);
+
 
   const openConfirmationPopup = (id) => {
     setSelectedBonId(id);

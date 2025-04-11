@@ -3,9 +3,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Slidebar.jsx";
 import "../css/Settings.css";
-
 function ChefSettings() {
     const navigate = useNavigate()
+
 
     const navigateTo = (path) => {
       navigate(path)

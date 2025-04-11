@@ -19,6 +19,8 @@ export default function Categories() {
   const [error, setError] = useState("");
   const [compteurs, setCompteurs] = useState({}); // Stocke le nombre de produits par catégorie
 
+  
+
   // Récupérer le nombre de produits par catégorie
   useEffect(() => {
     const fetchCounts = async () => {

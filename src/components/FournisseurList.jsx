@@ -4,6 +4,7 @@ import Sidebar from "./Slidebar.jsx";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import "../css/FournisseurList.css";
 
+
 // ✅ Notification de succès
 function Notification({ message, onClose }) {
     useEffect(() => {

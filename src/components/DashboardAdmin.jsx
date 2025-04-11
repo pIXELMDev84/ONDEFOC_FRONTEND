@@ -16,11 +16,24 @@ function DashboardAdmin() {
   const [isLoading, setIsLoading] = useState(true)
   const navigate = useNavigate()
 
-  // Fonction pour la déconnexion
-  const handleLogout = () => {
-    localStorage.removeItem("user")
-    navigate("/login")
-  }
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user") || sessionStorage.getItem("user");
+    if (storedUser) {
+        setUser(JSON.parse(storedUser));
+        console.log("Utilisateur chargé:", JSON.parse(storedUser));
+    } else {
+        console.log("Aucun utilisateur trouvé, redirection...");
+        navigate("/login");
+    }
+}, []);
+
+const handleLogout = () => {
+  localStorage.removeItem("user");
+  localStorage.removeItem("token");
+  sessionStorage.removeItem("user");
+  sessionStorage.removeItem("token");
+  navigate("/login");
+};
 
   // Fonction pour récupérer l'initiale du nom
   const getInitial = (name) => {

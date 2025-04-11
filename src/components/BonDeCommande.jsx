@@ -28,6 +28,7 @@ const BonDeCommande = () => {
   const [loading, setLoading] = useState(false)
   const [animateForm, setAnimateForm] = useState(false)
 
+  
   useEffect(() => {
     // Ajouter une animation au chargement initial
     setAnimateForm(true)

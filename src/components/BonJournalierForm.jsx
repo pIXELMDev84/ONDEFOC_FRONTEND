@@ -15,6 +15,7 @@ import "../css/BonJournalier.css"
 
 // Importez votre sidebar existante
 import Sidebar from "./Slidebar"
+
 const BonJournalier = () => {
   const [categories, setCategories] = useState([])
   const [selectedCategory, setSelectedCategory] = useState("")
@@ -25,6 +26,8 @@ const BonJournalier = () => {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState({ text: "", type: "" })
   const [animateForm, setAnimateForm] = useState(false)
+
+  
 
   // Charger les catégories et les produits en stock
   useEffect(() => {

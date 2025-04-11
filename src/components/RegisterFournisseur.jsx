@@ -23,6 +23,8 @@ const RegisterFournisseur = () => {
 
   const navigate = useNavigate()
 
+  
+
   // Récupérer les catégories depuis l'API
   useEffect(() => {
     // Ajouter une animation au chargement initial

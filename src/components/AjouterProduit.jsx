@@ -136,13 +136,13 @@ const AjouterProduit = () => {
                 Catégorie :
               </label>
               <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)} required>
-                <option value="">Sélectionnez une catégorie</option>
-                {categories.map((cat) => (
-                  <option key={cat.id} value={cat.id}>
-                    {cat.nom}
-                  </option>
-                ))}
-              </select>
+  <option value="">Sélectionnez une catégorie</option>
+  {categories.map((cat) => (
+    <option key={cat.id} value={cat.id}>
+      {cat.name} {/* Utiliser name au lieu de nom */}
+    </option>
+  ))}
+</select>
             </div>
 
             <button type="submit" className="submit-button" disabled={loading}>
