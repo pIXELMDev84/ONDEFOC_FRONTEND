@@ -1,46 +1,121 @@
-.settings-container {
+.dashboard {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-}
-
-.settings-container h1 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #333;
-}
-
-.cards-vertical {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    height: 100vh;
+    background-color: #f8f9fa;
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+  }
+  
+  .settings-container {
+    max-width: 1200px;
+    margin: 0 auto;
     width: 100%;
-    max-width: 400px;
-}
-
-.card {
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.card h2 {
-    margin: 0 0 10px;
-    font-size: 20px;
+  }
+  
+  /* Styles pour le titre et sous-titre centrés */
+  .page-title {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .page-title h1 {
+    font-size: 1.75rem;
+    font-weight: 600;
     color: #82354b;
-}
-
-.card p {
-    color: #555;
-    font-size: 14px;
-}
+    margin: 0;
+  }
+  
+  .page-title p {
+    font-size: 1rem;
+    color: #6c757d;
+    margin: 0.25rem 0 0 0;
+  }
+  
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .card {
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    position: relative;
+    border-left: 3px solid #82354b;
+    overflow: hidden;
+  }
+  
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-content {
+    display: flex;
+    flex: 1;
+    gap: 1rem;
+  }
+  
+  .card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f9f0f2;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+  }
+  
+  .icon {
+    font-size: 1.5rem;
+  }
+  
+  .card-text {
+    flex: 1;
+  }
+  
+  .card-text h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #82354b;
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .card-text p {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin: 0;
+    line-height: 1.4;
+  }
+  
+  .card-arrow {
+    display: flex;
+    align-items: center;
+    color: #82354b;
+    margin-left: 1rem;
+  }
+  
+  .arrow-icon {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  @media (max-width: 768px) {
+    .cards-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .main-content {
+      padding: 1rem;
+    }
+  }
+  

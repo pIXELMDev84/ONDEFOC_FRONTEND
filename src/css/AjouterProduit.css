@@ -1,102 +1,189 @@
+.dashboard {
+  display: flex;
+  height: 100vh;
+  background-color: #f8f9fa;
+}
 
-.form-container {
-    flex-grow: 1;
-    padding: 20px;
-    background-color: white;
-    margin: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.main-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.form-wrapper {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 500px;
+  overflow: hidden;
+}
+
+.form-header {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  gap: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.form-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f9f0f2;
+}
+
+.form-icon .icon {
+  color: #82354b;
+}
+
+.form-header h2 {
+  margin: 0;
+  color: #82354b;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.form-header p {
+  margin: 0.25rem 0 0;
+  color: #6c757d;
+  font-size: 0.875rem;
+}
+
+.message {
+  margin: 1rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+}
+
+.message.success {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.message.error {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.product-form {
+  padding: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: #495057;
+  font-size: 0.875rem;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  transition: border-color 0.2s;
+  background-color: white;
+  color: #333;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #82354b;
+}
+
+/* Styles spécifiques pour le select de catégories */
+.category-select {
+  appearance: auto; /* Restaure l'apparence native du select */
+}
+
+.category-select option {
+  padding: 8px;
+  color: #333;
+  background-color: white;
+}
+
+.form-error {
+  color: #dc3545;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 0.875rem;
+  background-color: #82354b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.submit-button:hover {
+  background-color: #6a2a3d;
+}
+
+.submit-button:disabled {
+  background-color: #b3b3b3;
+  cursor: not-allowed;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(130, 53, 75, 0.2);
+  border-radius: 50%;
+  border-top-color: #82354b;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
-  
-  h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
+  100% {
+    transform: rotate(360deg);
   }
-  
-  .form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+}
+
+@media (max-width: 576px) {
+  .main-content {
+    padding: 1rem;
   }
-  
-  .form div {
-    display: flex;
-    flex-direction: column;
+
+  .form-wrapper {
+    max-width: 100%;
   }
-  
-  label {
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #555;
-  }
-  
-  input[type="text"],
-  input[type="number"],
-  input[type="date"],
-  select {
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    transition: border-color 0.3s ease;
-  }
-  
-  input:focus,
-  select:focus {
-    border-color: #007bff;
-    outline: none;
-  }
-  
-  button {
-    padding: 10px 15px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  }
-  
-  .error {
-    color: red;
-    font-weight: bold;
-    text-align: center;
-  }
-  
-  .loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-  }
-  
-  .spinner {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #007bff;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    animation: spin 1s linear infinite;
-  }
-  
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  
-  
+}

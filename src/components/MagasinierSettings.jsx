@@ -5,40 +5,71 @@ import Sidebar from "../components/Slidebar.jsx";
 import "../css/Settings.css";
 
 function MagasinierSettings() {
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     const navigateTo = (path) => {
-        navigate(path);
-    };
-
+      navigate(path)
+    }
+  
+    const cards = [
+      {
+        title: "Créer Un Bon De Commande",
+        description: "Créez un Bon De commande dans le système.",
+        path: "/BonDeCommande/creation",
+        icon: "📝", // Icône document/commande
+      },
+      {
+        title: "Créer Un Bon De Réception",
+        description: "Créez un Bon De Réception dans le système.",
+        path: "/BonDeReseption/creation",
+        icon: "📦", // Icône colis/réception
+      },
+      {
+        title: "Ajouter un Produit",
+        description: "Ajoutez un produit au système.",
+        path: "/AjouterProduit",
+        icon: "🛍️", // Icône produit
+      },
+      {
+        title: "Établir les États de Sortie",
+        description: "Retirez une quantité consommée du stock.",
+        path: "/BonJournalierForm",
+        icon: "📊", // Icône graphique/statistiques
+      },
+    ]
+  
     return (
-        <div className="dashboard"> {/* Conteneur parent */}
-            <Sidebar /> {/* Sidebar */}
-            <div className="main-content"> {/* Contenu principal */}
-                <div className="settings-container">
-                    <h1>Paramètres Utilisateur</h1>
-                    <div className="cards-vertical">
-                        <div className="card" onClick={() => navigateTo("/BonDeCommande/creation")}>
-                            <h2>Crée Un Bon De commande</h2>
-                            <p>Crée un Bon De commande dans le système.</p>
-                        </div>
-                        <div className="card" onClick={() => navigateTo("/BonDeReseption/creation")}>
-                            <h2>Crée Un Bon De Reseption</h2>
-                            <p>Crée un Bon De Reseption dans le système.</p>
-                        </div>
-                        <div className="card" onClick={() => navigateTo("/AjouterProduit")}>
-                            <h2>ajouter un produit</h2>
-                            <p>ajouter un produit système.</p>
-                        </div>
-                        <div className="card" onClick={() => navigateTo("/BonJournalierForm")}>
-                            <h2>etablir les etat de sortie</h2>
-                            <p>retirer une quantité consomé du stock</p>
-                        </div>
-                    </div>
-                </div>
+      <div className="dashboard">
+        <Sidebar />
+        <div className="main-content">
+          <div className="settings-container">
+            {/* Titre et sous-titre centrés */}
+            <div className="page-title">
+              <h1>Paramètres Gestion</h1>
+              <p>Configurez et gérez les paramètres du système</p>
             </div>
+  
+            <div className="cards-grid">
+              {cards.map((card, index) => (
+                <div key={index} className="card" onClick={() => navigateTo(card.path)}>
+                  <div className="card-content">
+                    <div className="card-icon">
+                      <span className="icon">{card.icon}</span>
+                    </div>
+                    <div className="card-text">
+                      <h2>{card.title}</h2>
+                      <p>{card.description}</p>
+                    </div>
+                  </div>
+                  <div className="card-arrow">
+                    <span className="arrow-icon">›</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-    );
-}
-
+      </div>
+    )
+  }
 export default MagasinierSettings;

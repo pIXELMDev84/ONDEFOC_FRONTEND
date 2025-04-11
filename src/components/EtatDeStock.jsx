@@ -10,7 +10,7 @@ const EtatDeStock = () => {
   const [showPopup, setShowPopup] = useState(false);
 
   const fetchStockData = () => {
-    fetch("http://localhost:8000/api/stock-global") // Change l'URL si besoin
+    fetch("http://localhost:8000/api/stock-global") 
       .then((response) => response.json())
       .then((data) => setStockData(data.categories))
       .catch((error) => console.error("Erreur de chargement:", error));
