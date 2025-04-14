@@ -11,6 +11,8 @@ const ListeDesBonsDeCommande = () => {
   const [selectedBonId, setSelectedBonId] = useState(null);
   const [userRole, setUserRole] = useState("");
 
+  useEffect(() => {
+    // Récupération des bons de commande
     const fetchBonsDeCommande = async () => {
       try {
         const response = await axios.get("http://localhost:8000/api/abdcm");
@@ -20,7 +22,31 @@ const ListeDesBonsDeCommande = () => {
         setMessage("Erreur lors de la récupération des bons de commande");
       }
     };
+
+    // Récupération du rôle utilisateur
+    const fetchUserRole = async () => {
+      try {
+        // Vérifiez si les données utilisateur sont dans localStorage ou sessionStorage
+        const userData = localStorage.getItem("user") || sessionStorage.getItem("user");
+        if (userData) {
+          const user = JSON.parse(userData); // Parse les données JSON
+          setUserRole(user.role); // Définissez le rôle de l'utilisateur
+        } else {
+          // Si les données ne sont pas trouvées, essayez de les récupérer via une API
+          const response = await axios.get("http://localhost:8000/api/current-user");
+          setUserRole(response.data.role); // Définissez le rôle de l'utilisateur à partir de l'API
+          // Facultatif : stockez les données dans sessionStorage pour une utilisation future
+          sessionStorage.setItem("user", JSON.stringify(response.data));
+        }
+      } catch (error) {
+        console.error("Erreur lors de la récupération du rôle utilisateur", error);
+        setMessage("Impossible de récupérer le rôle utilisateur.");
+      }
+    };
+
     fetchBonsDeCommande();
+    fetchUserRole();
+  }, []);
 
   // Suppression d'un bon de commande
   const handleDelete = async (id) => {
@@ -82,11 +108,20 @@ const ListeDesBonsDeCommande = () => {
                   <td>{bon.fournisseur.num_telephone}</td>
                   <td>{new Date(bon.created_at).toLocaleDateString()}</td>
                   <td className="actions">
+                    {/* Bouton de téléchargement */}
                     <button className="download-button" onClick={() => handleDownload(bon.id)}>
                       <FiDownload size={18} color="green" />
                     </button>
+
+                    {/* Bouton de suppression uniquement pour les admins */}
                     {userRole === "admin" && (
-                      <button className="delete-button" onClick={() => setShowConfirmPopup(true)}>
+                      <button
+                        className="delete-button"
+                        onClick={() => {
+                          setSelectedBonId(bon.id);
+                          setShowConfirmPopup(true);
+                        }}
+                      >
                         <FiTrash2 size={18} color="red" />
                       </button>
                     )}

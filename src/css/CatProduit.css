@@ -19,25 +19,32 @@
 }
 
 /* 📌 Contenu principal */
-.main-content {
-  flex: 1;
-  text-align: center;
-}
-
-/* 🔹 Titre principal */
 h1 {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 700;
   color: var(--primary-color);
   margin-bottom: 1rem;
+  text-align: center; /* Centrer le texte */
 }
 
-/* 🔹 Sous-titre */
+/* Centrer le sous-titre */
 h3 {
   font-size: 1.2rem;
   font-weight: 500;
   color: var(--text-light);
   margin-bottom: 2rem;
+  text-align: center; /* Centrer le sous-titre */
+}
+
+/* Conteneur principal (pour centrer tout le contenu) */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centrer horizontalement */
+  justify-content: flex-start; /* Commencer en haut */
+  text-align: center;
+  padding: 2rem 1rem; /* Ajouter un peu d'espace autour */
 }
 
 /* 🎨 Conteneur des catégories */

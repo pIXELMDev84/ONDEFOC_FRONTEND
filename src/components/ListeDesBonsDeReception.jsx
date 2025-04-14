@@ -12,18 +12,52 @@ const ListeDesBonsDeReception = () => {
   const [selectedBonId, setSelectedBonId] = useState(null);
   const [userRole, setUserRole] = useState(null);
 
-const fetchBonsDeReception = async () => {
-      try {
-        const response = await axios.get("http://localhost:8000/api/abdrs");
-        setBonsDeReception(response.data);
-        setFilteredBons(response.data);
-      } catch (error) {
-        console.error("Erreur lors de la récupération des bons de réception", error);
-        setMessage("Erreur lors de la récupération des bons de réception");
-      }
-    };
-    fetchBonsDeReception();
+  // Fonction pour récupérer le rôle utilisateur, peu importe la source
+  const fetchUserRole = async () => {
+    try {
+      // Étape 1 : Vérifiez localStorage ou sessionStorage
+      const userData =
+        localStorage.getItem("user") || sessionStorage.getItem("user");
 
+      if (userData) {
+        const user = JSON.parse(userData);
+        if (user && user.role) {
+          setUserRole(user.role);
+          return;
+        }
+      }
+
+      // Étape 2 : Si aucune donnée locale, faites une requête API
+      const response = await axios.get("http://localhost:8000/api/current-user");
+      if (response.data && response.data.role) {
+        setUserRole(response.data.role);
+
+        // Facultatif : stockez les données dans sessionStorage pour une utilisation future
+        sessionStorage.setItem("user", JSON.stringify(response.data));
+      }
+    } catch (error) {
+      console.error("Erreur lors de la récupération du rôle utilisateur", error);
+      setMessage("Impossible de récupérer le rôle utilisateur.");
+    }
+  };
+
+  // Fonction pour récupérer les bons de réception
+  const fetchBonsDeReception = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/abdrs");
+      setBonsDeReception(response.data);
+      setFilteredBons(response.data);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des bons de réception", error);
+      setMessage("Erreur lors de la récupération des bons de réception");
+    }
+  };
+
+  // Appels initiaux pour récupérer les données
+  useEffect(() => {
+    fetchUserRole();
+    fetchBonsDeReception();
+  }, []);
 
   // Fonction pour ouvrir le popup de confirmation de suppression
   const openConfirmationPopup = (id) => {

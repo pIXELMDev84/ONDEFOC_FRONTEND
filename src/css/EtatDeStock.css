@@ -26,17 +26,21 @@
   display: flex;
   height: 100vh;
 }
-
 .content {
   flex-grow: 1;
   padding: 20px;
-  background-color: #ffffff; /* Couleur de fond douce */
+  background-color: #ffffff; /* Fond doux */
   overflow-y: auto;
+  display: flex; /* Ajouté pour centrer */
+  flex-direction: column; /* Aligne verticalement */
+  align-items: center; /* Centre horizontalement */
+  justify-content: flex-start; /* Commence en haut */
 }
 
+/* Titre principal */
 h2 {
-  text-align: left;
-  font-size: 22px;
+  text-align: center; /* Centre horizontalement le texte */
+  font-size: 2.5rem; /* Taille du texte plus grande */
   color: #3b2d2c;
   margin-bottom: 20px;
   font-weight: bold;

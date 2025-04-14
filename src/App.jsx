@@ -22,11 +22,11 @@ import BonJournalierForm from './components/BonJournalierForm';
 import ListeDesBonJournalier from './components/ListeDesBonJournalier';
 
 
+
 function App() {
     return (
         <Router>
             <Routes>
-
                 <Route path="/" element={<Navigate to="/login" />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/dashboard" element={<DashboardAdmin />} />
@@ -49,9 +49,6 @@ function App() {
                 <Route path="/CatProduit" element={<CatProduit />} />
                 <Route path="/BonJournalierForm" element={<BonJournalierForm />} />
                 <Route path="/ListeDesBonJournalier" element={<ListeDesBonJournalier />} />
-
-                
-
             </Routes>
         </Router>
     );

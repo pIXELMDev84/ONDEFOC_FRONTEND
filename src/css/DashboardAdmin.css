@@ -418,6 +418,7 @@ body {
   border-top: 1px solid #eee;
   display: flex;
   justify-content: flex-end;
+  gap: 10px;
 }
 
 .modal-btn {
@@ -516,4 +517,328 @@ body {
     margin-top: 10px;
     align-self: flex-end;
   }
+}
+/* Ajout des nouveaux styles pour les statistiques des catégories en haut */
+.category-stats-top {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 15px;
+  padding: 0 15px;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 15px;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-number {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+/* Ajustement de la carte de catégorie */
+.category-card {
+  padding: 15px 20px 25px 20px; /* Réduction du padding bas */
+}
+
+/* Style pour les messages d'erreur */
+.error-message {
+  color: #e74c3c;
+  text-align: center;
+  padding: 20px;
+  font-weight: 500;
+}
+
+/* Styles pour la popup/modal */
+.modal-title {
+  display: flex;
+  align-items: center;
+}
+
+.popup-category-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  background-color: #ff6384;
+}
+
+.popup-category-icon .category-icon {
+  font-size: 28px;
+  color: white;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+/* Supprimer les anciens styles qui ne sont plus utilisés */
+.category-numbers,
+.number-column,
+.category-stats,
+.modal-category-icon {
+  display: none;
+}
+.mon-compte-btn {
+  background: none;
+  border: none;
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.mon-compte-btn:hover {
+  color: #0056b3;
+}
+
+/* Nouveaux styles pour le modal de profil - Mise à jour selon les images */
+.profile-modal {
+  max-width: 500px;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.profile-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+  background-color: #f9f9f9;
+}
+
+.profile-modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+  font-weight: 500;
+}
+
+.profile-modal-content {
+  padding: 30px 20px;
+}
+
+/* Updated styles for input fields in the profile modal */
+.profile-input {
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 12px 15px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  background-color: #ffffff; /* Changed from #f9f9f9 to #fff for better contrast */
+  color: #000000; /* Ensure the text color is visible */
+  transition: border-color 0.3s ease;
+}
+
+.profile-input:focus {
+  border-color: #82354b;
+  box-shadow: 0 0 5px rgba(130, 53, 75, 0.3);
+}
+
+.profile-input::placeholder {
+  color: #bbb;
+}
+
+/* Toast Notification - Style for saved changes */
+.toast-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 20px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: white;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1100;
+  animation: slideIn 0.3s ease-out forwards;
+  min-width: 300px;
+  opacity: 0.95;
+}
+
+.toast-notification.success {
+  background-color: #28a745; /* Green for success */
+}
+
+.notification-icon {
+  color: white;
+  font-size: 18px;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 0.95;
+  }
+}
+
+/* Optional: Placeholder color */
+.profile-input::placeholder {
+  color: #bbb; /* Placeholder color */
+}
+
+/* Style commun pour les boutons d'action */
+.save-btn,
+.cancel-btn {
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  min-width: 120px;
+  text-align: center;
+}
+
+/* Style spécifique pour le bouton Enregistrer */
+.save-btn {
+  background-color: #82354b;
+  color: white;
+}
+
+.save-btn:hover {
+  background-color: #6a2a3d;
+}
+
+/* Style spécifique pour le bouton Annuler */
+.cancel-btn {
+  background-color: #82354b;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background-color: #6a2a3d;
+}
+
+/* Toast Notification - Style professionnel */
+.toast-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 20px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: white;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1100;
+  animation: slideIn 0.3s ease-out forwards;
+  min-width: 300px;
+  opacity: 0.95;
+}
+
+.toast-notification.success {
+  background-color: #28a745;
+}
+
+.toast-notification.error {
+  background-color: #dc3545;
+}
+
+.notification-icon {
+  color: white;
+  font-size: 18px;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 0.95;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 0.95;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Styles pour le modal de fournisseur (deuxième image) */
+.supplier-modal .profile-input {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #ddd;
+  color: #333;
+  border-radius: 4px;
+  padding: 10px 15px;
+}
+
+.supplier-modal .profile-input svg {
+  margin-right: 10px;
+  color: #82354b;
+}
+
+.supplier-modal .save-btn {
+  background-color: #ff0000;
+  color: white;
+}
+
+.supplier-modal .cancel-btn {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.supplier-modal .profile-modal-header {
+  border-bottom: 2px solid #82354b;
+  padding-bottom: 10px;
+  background-color: white;
+}
+
+.supplier-modal .profile-modal-header h3 {
+  color: #82354b;
+  display: flex;
+  align-items: center;
+}
+
+.supplier-modal .profile-modal-header h3 svg {
+  margin-right: 10px;
+  color: #82354b;
 }

@@ -11,35 +11,84 @@ const ListeDesBonJournalier = () => {
   const [selectedBonId, setSelectedBonId] = useState(null);
   const [userRole, setUserRole] = useState(null);
 
-  const fetchBonsJournaliers = async () => {
-      try {
-        const response = await axios.get("http://localhost:8000/api/bons-journaliers");
-        setBonsJournaliers(response.data);
-      } catch (error) {
-        console.error("Erreur lors de la récupération des bons journaliers", error);
-        setMessage("Erreur lors de la récupération des bons journaliers");
+  // Fonction pour récupérer le rôle utilisateur, peu importe la source
+  const fetchUserRole = async () => {
+    try {
+      // Étape 1 : Vérifiez localStorage ou sessionStorage
+      const userData =
+        localStorage.getItem("user") || sessionStorage.getItem("user");
+
+      if (userData) {
+        const user = JSON.parse(userData);
+        if (user && user.role) {
+          setUserRole(user.role);
+          return;
+        }
       }
-    };
+
+      // Étape 2 : Si aucune donnée locale, faites une requête API
+      const response = await axios.get("http://localhost:8000/api/current-user");
+      if (response.data && response.data.role) {
+        setUserRole(response.data.role);
+
+        // Facultatif : stockez les données dans sessionStorage pour une utilisation future
+        sessionStorage.setItem("user", JSON.stringify(response.data));
+      }
+    } catch (error) {
+      console.error("Erreur lors de la récupération du rôle utilisateur", error);
+      setMessage({
+        text: "Impossible de récupérer le rôle utilisateur.",
+        type: "error",
+      });
+    }
+  };
+
+  // Fonction pour récupérer les bons journaliers
+  const fetchBonsJournaliers = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/bons-journaliers");
+      setBonsJournaliers(response.data);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des bons journaliers", error);
+      setMessage({
+        text: "Erreur lors de la récupération des bons journaliers",
+        type: "error",
+      });
+    }
+  };
+
+  // Appels initiaux pour récupérer les données
+  useEffect(() => {
+    fetchUserRole();
     fetchBonsJournaliers();
+  }, []);
 
-
+  // Ouverture de la popup de confirmation pour suppression
   const openConfirmationPopup = (id) => {
     setSelectedBonId(id);
     setShowConfirmPopup(true);
   };
 
+  // Fonction pour supprimer un bon journalier
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://localhost:8000/api/bons-journaliers/${id}`);
       setBonsJournaliers((prev) => prev.filter((bon) => bon.id !== id));
-      setMessage({ text: "Bon journalier supprimé avec succès.", type: "success" });
+      setMessage({
+        text: "Bon journalier supprimé avec succès.",
+        type: "success",
+      });
     } catch (error) {
       console.error("Erreur lors de la suppression du bon journalier", error);
-      setMessage({ text: "Une erreur est survenue lors de la suppression.", type: "error" });
+      setMessage({
+        text: "Une erreur est survenue lors de la suppression.",
+        type: "error",
+      });
     }
     setShowConfirmPopup(false);
   };
 
+  // Fonction pour télécharger un bon journalier
   const handleDownload = async (id) => {
     window.open(`http://localhost:8000/api/bons-journaliers/${id}`, "_blank");
   };
@@ -51,9 +100,7 @@ const ListeDesBonJournalier = () => {
         <h2>Liste des bons journaliers</h2>
 
         {message && (
-          <div className={`notification ${message.type}`}>
-            {message.text}
-          </div>
+          <div className={`notification ${message.type}`}>{message.text}</div>
         )}
 
         <table className="bons-table">
@@ -71,6 +118,12 @@ const ListeDesBonJournalier = () => {
                   <td>{bon.code}</td>
                   <td>{new Date(bon.created_at).toLocaleDateString()}</td>
                   <td className="actions">
+                    <button
+                      className="download-button"
+                      onClick={() => handleDownload(bon.id)}
+                    >
+                      <FiDownload size={18} color="green" />
+                    </button>
                     {userRole === "admin" && (
                       <button
                         className="delete-button"
@@ -79,12 +132,6 @@ const ListeDesBonJournalier = () => {
                         <FiTrash2 size={18} color="red" />
                       </button>
                     )}
-                    <button
-                      className="download-button"
-                      onClick={() => handleDownload(bon.id)}
-                    >
-                      <FiDownload size={18} color="green" />
-                    </button>
                   </td>
                 </tr>
               ))
@@ -109,7 +156,10 @@ const ListeDesBonJournalier = () => {
               >
                 Oui, supprimer
               </button>
-              <button className="cancel-button" onClick={() => setShowConfirmPopup(false)}>
+              <button
+                className="cancel-button"
+                onClick={() => setShowConfirmPopup(false)}
+              >
                 Annuler
               </button>
             </div>

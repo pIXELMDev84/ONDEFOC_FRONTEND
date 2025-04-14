@@ -1,4 +1,3 @@
-
 .list-container {
     flex: 1;
     padding: 2rem;
@@ -138,4 +137,25 @@
   .cancel-button:hover {
     background: #b3b3b3;
   }
+  .actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
   
+  .download-button,
+  .delete-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    transition: transform 0.2s ease;
+  }
+  
+  .download-button:hover {
+    transform: scale(1.1);
+  }
+  
+  .delete-button:hover {
+    transform: scale(1.1);
+  }
